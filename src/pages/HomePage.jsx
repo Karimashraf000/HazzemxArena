@@ -1,10 +1,19 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../context/TournamentContext';
 import './HomePage.css';
 
 const HomePage = () => {
     const navigate = useNavigate();
-    const { resetTournament } = useTournament();
+    const { resetTournament, tournamentId } = useTournament();
+
+    // Redirect to bracket if tournament is loaded from URL
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('t') && tournamentId) {
+            navigate(`/bracket/${tournamentId}`);
+        }
+    }, [tournamentId, navigate]);
 
     const handleCreateTournament = () => {
         resetTournament();

@@ -197,18 +197,15 @@ export const getTournamentProgress = (bracket) => {
 // Encode tournament to URL param
 export const encodeTournament = (tournament) => {
     try {
-        // Optimize: Only store song IDs/URLs and votes
-        // We can reconstruct the bracket if we know the songs (in order) and the votes
+        // Extreme Optimization: Store only essential fields with short keys
+        // p: platform (y/s), i: songId, t: truncated title
         const songsData = tournament.songs.map(s => ({
-            i: s.id,
-            u: s.url,
-            t: s.title,
-            p: s.platform,
-            th: s.thumbnail
+            p: s.platform === 'youtube' ? 'y' : 's',
+            i: s.songId,
+            t: s.title.substring(0, 30) // Truncate title to save space
         }));
 
         // Create a vote string: 0=no winner, 1=song1, 2=song2
-        // We iterate through all matches in order
         const votes = tournament.bracket.allMatches.map(m => {
             if (!m.winner) return '0';
             return m.winner.id === m.song1.id ? '1' : '2';
@@ -217,7 +214,7 @@ export const encodeTournament = (tournament) => {
         const payload = {
             s: songsData,
             v: votes,
-            id: tournament.id
+            id: tournament.id ? tournament.id.replace('tournament-', '') : Date.now().toString()
         };
 
         const json = JSON.stringify(payload);
@@ -236,17 +233,29 @@ export const decodeTournament = (encoded) => {
 
         const payload = JSON.parse(json);
 
-        // Reconstruct songs
-        const songs = payload.s.map(d => ({
-            id: d.i,
-            url: d.u,
-            title: d.t,
-            platform: d.p,
-            thumbnail: d.th,
-            embedUrl: d.p === 'youtube'
-                ? `https://www.youtube.com/embed/${d.i.split('-')[1]}`
-                : `https://open.spotify.com/embed/track/${d.i.split('-')[1]}`
-        }));
+        // Reconstruct full song objects
+        const songs = payload.s.map(d => {
+            const platform = d.p === 'y' ? 'youtube' : 'spotify';
+            const songId = d.i;
+            const title = d.t;
+
+            return {
+                id: `${platform}-${songId}-${Date.now()}`,
+                platform,
+                songId,
+                title,
+                url: platform === 'youtube'
+                    ? `https://www.youtube.com/watch?v=${songId}`
+                    : `https://open.spotify.com/track/${songId}`,
+                embedUrl: platform === 'youtube'
+                    ? `https://www.youtube.com/embed/${songId}`
+                    : `https://open.spotify.com/embed/track/${songId}`,
+                thumbnail: platform === 'youtube'
+                    ? `https://img.youtube.com/vi/${songId}/hqdefault.jpg`
+                    : null,
+                artist: 'Unknown Artist'
+            };
+        });
 
         // Generate bracket (without shuffling to preserve order)
         const bracket = generateBracket(songs, false);
@@ -266,7 +275,7 @@ export const decodeTournament = (encoded) => {
         });
 
         return {
-            id: payload.id,
+            id: `tournament-${payload.id}`,
             songs,
             bracket: currentBracket
         };

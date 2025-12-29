@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../context/TournamentContext';
 import { createSongFromUrl } from '../utils/songUtils';
 import YouTubeSearch from '../components/YouTubeSearch';
+import SpotifySearch from '../components/SpotifySearch';
 import './TournamentSetup.css';
 
 const TournamentSetup = () => {
@@ -103,6 +104,12 @@ const TournamentSetup = () => {
                         >
                             Search YouTube
                         </button>
+                        <button
+                            className={`tab-btn ${activeTab === 'spotify' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('spotify')}
+                        >
+                            Search Spotify
+                        </button>
                     </div>
 
                     {activeTab === 'paste' ? (
@@ -127,8 +134,13 @@ const TournamentSetup = () => {
                                 </button>
                             </div>
                         </>
-                    ) : (
+                    ) : activeTab === 'search' ? (
                         <YouTubeSearch
+                            onAddSong={handleAddSearchedSong}
+                            disabled={songs.length >= 32}
+                        />
+                    ) : (
+                        <SpotifySearch
                             onAddSong={handleAddSearchedSong}
                             disabled={songs.length >= 32}
                         />
