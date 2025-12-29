@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../context/TournamentContext';
 import { createSongFromUrl } from '../utils/songUtils';
+import YouTubeSearch from '../components/YouTubeSearch';
 import './TournamentSetup.css';
 
 const TournamentSetup = () => {
@@ -10,6 +11,7 @@ const TournamentSetup = () => {
     const [songUrl, setSongUrl] = useState('');
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
+    const [activeTab, setActiveTab] = useState('paste');
 
     const handleAddSong = async () => {
         if (!songUrl.trim()) {
@@ -24,6 +26,19 @@ const TournamentSetup = () => {
             const song = createSongFromUrl(songUrl);
             addSong(song);
             setSongUrl('');
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleAddSearchedSong = async (url) => {
+        try {
+            setLoading(true);
+            setError('');
+            const song = createSongFromUrl(url);
+            addSong(song);
         } catch (err) {
             setError(err.message);
         } finally {
@@ -75,27 +90,49 @@ const TournamentSetup = () => {
                 </div>
 
                 <div className="add-song-section card card-glow animate-fadeIn delay-200">
-                    <h3>Add Songs</h3>
-                    <p className="instruction">Paste YouTube or Spotify song links below</p>
-
-                    <div className="input-group">
-                        <input
-                            type="text"
-                            className="song-input"
-                            placeholder="https://youtube.com/watch?v=... or https://open.spotify.com/track/..."
-                            value={songUrl}
-                            onChange={(e) => setSongUrl(e.target.value)}
-                            onKeyPress={handleKeyPress}
-                            disabled={songs.length >= 32}
-                        />
+                    <div className="add-method-tabs">
                         <button
-                            className="btn btn-primary"
-                            onClick={handleAddSong}
-                            disabled={songs.length >= 32 || loading}
+                            className={`tab-btn ${activeTab === 'paste' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('paste')}
                         >
-                            {loading ? 'Adding...' : 'Add Song'}
+                            Paste Link
+                        </button>
+                        <button
+                            className={`tab-btn ${activeTab === 'search' ? 'active' : ''}`}
+                            onClick={() => setActiveTab('search')}
+                        >
+                            Search YouTube
                         </button>
                     </div>
+
+                    {activeTab === 'paste' ? (
+                        <>
+                            <p className="instruction">Paste YouTube or Spotify song links below</p>
+                            <div className="input-group">
+                                <input
+                                    type="text"
+                                    className="song-input"
+                                    placeholder="https://youtube.com/watch?v=... or https://open.spotify.com/track/..."
+                                    value={songUrl}
+                                    onChange={(e) => setSongUrl(e.target.value)}
+                                    onKeyPress={handleKeyPress}
+                                    disabled={songs.length >= 32}
+                                />
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={handleAddSong}
+                                    disabled={songs.length >= 32 || loading}
+                                >
+                                    {loading ? 'Adding...' : 'Add Song'}
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        <YouTubeSearch
+                            onAddSong={handleAddSearchedSong}
+                            disabled={songs.length >= 32}
+                        />
+                    )}
 
                     {error && (
                         <div className="error-message animate-scaleIn">
