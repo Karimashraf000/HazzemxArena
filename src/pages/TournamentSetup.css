@@ -1,0 +1,255 @@
+.tournament-setup {
+    min-height: 100vh;
+    padding: 4rem 0;
+    position: relative;
+    z-index: 1;
+}
+
+.setup-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.setup-header h1 {
+    margin-bottom: 1rem;
+}
+
+.song-counter {
+    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    color: var(--primary-400);
+    margin-bottom: 1rem;
+}
+
+.songs-needed {
+    color: var(--text-muted);
+    font-size: 1.25rem;
+}
+
+.progress-bar {
+    max-width: 600px;
+    height: 12px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 10px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-600), var(--accent-cyan));
+    border-radius: 10px;
+    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+}
+
+.add-song-section {
+    max-width: 800px;
+    margin: 0 auto 3rem;
+    padding: 2.5rem;
+}
+
+.add-song-section h3 {
+    margin-bottom: 0.5rem;
+}
+
+.instruction {
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+.input-group {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.song-input {
+    flex: 1;
+    padding: 1rem 1.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid var(--glass-border);
+    border-radius: 1rem;
+    color: var(--text-white);
+    font-family: var(--font-body);
+    font-size: 1rem;
+    transition: var(--transition-smooth);
+}
+
+.song-input:focus {
+    outline: none;
+    border-color: var(--primary-400);
+    box-shadow: 0 0 25px rgba(139, 92, 246, 0.4);
+}
+
+.song-input::placeholder {
+    color: var(--text-muted);
+}
+
+.song-input:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #FCA5A5;
+    padding: 1rem;
+    border-radius: 0.75rem;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.songs-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 1rem;
+    margin-bottom: 3rem;
+}
+
+.song-item {
+    position: relative;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.song-item:hover {
+    transform: translateY(-8px) scale(1.05);
+}
+
+.song-number {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    background: var(--primary-600);
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8rem;
+    font-weight: 600;
+    font-family: var(--font-mono);
+    z-index: 2;
+}
+
+.song-thumbnail {
+    width: 100%;
+    aspect-ratio: 16/9;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.song-thumbnail-placeholder {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: linear-gradient(135deg, var(--primary-700), var(--primary-900));
+    border-radius: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+.song-info {
+    margin-bottom: 0.5rem;
+}
+
+.song-title {
+    font-size: 0.9rem;
+    color: var(--text-white);
+    margin-bottom: 0.25rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.song-platform {
+    font-size: 0.75rem;
+    color: var(--accent-cyan);
+    text-transform: uppercase;
+    font-weight: 600;
+    font-family: var(--font-mono);
+}
+
+.btn-remove {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(239, 68, 68, 0.8);
+    border: none;
+    color: white;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    opacity: 0;
+    transition: var(--transition-smooth);
+    z-index: 2;
+}
+
+.song-item:hover .btn-remove {
+    opacity: 1;
+}
+
+.btn-remove:hover {
+    background: rgba(239, 68, 68, 1);
+    transform: scale(1.1);
+}
+
+.song-item-placeholder {
+    aspect-ratio: 1;
+    background: rgba(255, 255, 255, 0.02);
+    border: 2px dashed var(--glass-border);
+    border-radius: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-muted);
+    font-size: 1.5rem;
+    font-family: var(--font-mono);
+    opacity: 0.4;
+}
+
+.start-tournament-section {
+    text-align: center;
+    padding: 2rem 0;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .tournament-setup {
+        padding: 2rem 0;
+    }
+
+    .add-song-section {
+        padding: 1.5rem;
+    }
+
+    .input-group {
+        flex-direction: column;
+    }
+
+    .songs-grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 0.75rem;
+    }
+
+    .btn-remove {
+        opacity: 1;
+    }
+}

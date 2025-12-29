@@ -1,0 +1,215 @@
+// Shuffle array using Fisher-Yates algorithm
+export const shuffleArray = (array) => {
+    const shuffled = [...array];
+    for (let i = shuffled.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+};
+
+// Generate initial tournament bracket from 32 songs
+export const generateBracket = (songs) => {
+    if (songs.length !== 32) {
+        throw new Error('Tournament requires exactly 32 songs');
+    }
+
+    const shuffledSongs = shuffleArray(songs);
+
+    // Create Round of 32 matchups
+    const roundOf32 = [];
+    for (let i = 0; i < 32; i += 2) {
+        roundOf32.push({
+            id: `r32-${i / 2}`,
+            round: 'Round of 32',
+            roundNumber: 1,
+            matchNumber: i / 2 + 1,
+            song1: shuffledSongs[i],
+            song2: shuffledSongs[i + 1],
+            winner: null,
+            votes: { song1: 0, song2: 0 }
+        });
+    }
+
+    // Create placeholders for subsequent rounds
+    const roundOf16 = Array(8).fill(null).map((_, i) => ({
+        id: `r16-${i}`,
+        round: 'Round of 16',
+        roundNumber: 2,
+        matchNumber: i + 1,
+        song1: null,
+        song2: null,
+        winner: null,
+        votes: { song1: 0, song2: 0 }
+    }));
+
+    const quarterFinals = Array(4).fill(null).map((_, i) => ({
+        id: `qf-${i}`,
+        round: 'Quarter Final',
+        roundNumber: 3,
+        matchNumber: i + 1,
+        song1: null,
+        song2: null,
+        winner: null,
+        votes: { song1: 0, song2: 0 }
+    }));
+
+    const semiFinals = Array(2).fill(null).map((_, i) => ({
+        id: `sf-${i}`,
+        round: 'Semi Final',
+        roundNumber: 4,
+        matchNumber: i + 1,
+        song1: null,
+        song2: null,
+        winner: null,
+        votes: { song1: 0, song2: 0 }
+    }));
+
+    const final = [{
+        id: 'final',
+        round: 'Final',
+        roundNumber: 5,
+        matchNumber: 1,
+        song1: null,
+        song2: null,
+        winner: null,
+        votes: { song1: 0, song2: 0 }
+    }];
+
+    return {
+        roundOf32,
+        roundOf16,
+        quarterFinals,
+        semiFinals,
+        final,
+        allMatches: [...roundOf32, ...roundOf16, ...quarterFinals, ...semiFinals, ...final]
+    };
+};
+
+// Get current battle (first unfinished match)
+export const getCurrentBattle = (bracket) => {
+    return bracket.allMatches.find(match =>
+        match.song1 && match.song2 && !match.winner
+    );
+};
+
+// Get next battle after current
+export const getNextBattle = (bracket, currentBattleId) => {
+    const currentIndex = bracket.allMatches.findIndex(m => m.id === currentBattleId);
+    if (currentIndex === -1) return null;
+
+    for (let i = currentIndex + 1; i < bracket.allMatches.length; i++) {
+        const match = bracket.allMatches[i];
+        if (match.song1 && match.song2 && !match.winner) {
+            return match;
+        }
+    }
+    return null;
+};
+
+// Record a vote and update bracket
+export const recordVote = (bracket, battleId, winner) => {
+    const matchIndex = bracket.allMatches.findIndex(m => m.id === battleId);
+    if (matchIndex === -1) return bracket;
+
+    const updatedMatches = [...bracket.allMatches];
+    const match = { ...updatedMatches[matchIndex] };
+
+    // Set winner
+    match.winner = winner;
+
+    // Update vote count
+    if (winner === match.song1) {
+        match.votes.song1++;
+    } else {
+        match.votes.song2++;
+    }
+
+    updatedMatches[matchIndex] = match;
+
+    // Advance winner to next round
+    const updatedBracket = advanceWinner(updatedMatches, match);
+
+    return {
+        ...bracket,
+        allMatches: updatedBracket,
+        roundOf32: updatedBracket.slice(0, 16),
+        roundOf16: updatedBracket.slice(16, 24),
+        quarterFinals: updatedBracket.slice(24, 28),
+        semiFinals: updatedBracket.slice(28, 30),
+        final: [updatedBracket[30]]
+    };
+};
+
+// Advance winner to next round
+const advanceWinner = (matches, completedMatch) => {
+    const { id, roundNumber, matchNumber, winner } = completedMatch;
+
+    if (roundNumber === 5) {
+        // Final match, tournament complete
+        return matches;
+    }
+
+    // Calculate which match in next round
+    const nextRoundMatchIndex = Math.floor((matchNumber - 1) / 2);
+    const isFirstSlot = (matchNumber - 1) % 2 === 0;
+
+    // Find the next round match
+    const nextRoundStartIndex = {
+        1: 16, // Round of 32 -> Round of 16
+        2: 24, // Round of 16 -> Quarter Finals
+        3: 28, // Quarter Finals -> Semi Finals
+        4: 30  // Semi Finals -> Final
+    }[roundNumber];
+
+    const nextMatchIndex = nextRoundStartIndex + nextRoundMatchIndex;
+    const updatedMatches = [...matches];
+    const nextMatch = { ...updatedMatches[nextMatchIndex] };
+
+    // Place winner in appropriate slot
+    if (isFirstSlot) {
+        nextMatch.song1 = winner;
+    } else {
+        nextMatch.song2 = winner;
+    }
+
+    updatedMatches[nextMatchIndex] = nextMatch;
+
+    return updatedMatches;
+};
+
+// Get tournament progress
+export const getTournamentProgress = (bracket) => {
+    const completed = bracket.allMatches.filter(m => m.winner).length;
+    const total = bracket.allMatches.filter(m => m.song1 && m.song2).length;
+    const percentage = total > 0 ? (completed / total) * 100 : 0;
+
+    return {
+        completed,
+        total,
+        percentage: Math.round(percentage),
+        isComplete: completed === total
+    };
+};
+
+// Encode tournament to URL param
+export const encodeTournament = (tournament) => {
+    try {
+        const json = JSON.stringify(tournament);
+        return btoa(encodeURIComponent(json));
+    } catch (error) {
+        console.error('Error encoding tournament:', error);
+        return null;
+    }
+};
+
+// Decode tournament from URL param
+export const decodeTournament = (encoded) => {
+    try {
+        const json = decodeURIComponent(atob(encoded));
+        return JSON.parse(json);
+    } catch (error) {
+        console.error('Error decoding tournament:', error);
+        return null;
+    }
+};
