@@ -1,3 +1,5 @@
+import LZString from 'lz-string';
+
 // Shuffle array using Fisher-Yates algorithm
 export const shuffleArray = (array) => {
     const shuffled = [...array];
@@ -9,12 +11,12 @@ export const shuffleArray = (array) => {
 };
 
 // Generate initial tournament bracket from 32 songs
-export const generateBracket = (songs) => {
+export const generateBracket = (songs, shuffle = true) => {
     if (songs.length !== 32) {
         throw new Error('Tournament requires exactly 32 songs');
     }
 
-    const shuffledSongs = shuffleArray(songs);
+    const shuffledSongs = shuffle ? shuffleArray(songs) : [...songs];
 
     // Create Round of 32 matchups
     const roundOf32 = [];
@@ -195,8 +197,31 @@ export const getTournamentProgress = (bracket) => {
 // Encode tournament to URL param
 export const encodeTournament = (tournament) => {
     try {
-        const json = JSON.stringify(tournament);
-        return btoa(encodeURIComponent(json));
+        // Optimize: Only store song IDs/URLs and votes
+        // We can reconstruct the bracket if we know the songs (in order) and the votes
+        const songsData = tournament.songs.map(s => ({
+            i: s.id,
+            u: s.url,
+            t: s.title,
+            p: s.platform,
+            th: s.thumbnail
+        }));
+
+        // Create a vote string: 0=no winner, 1=song1, 2=song2
+        // We iterate through all matches in order
+        const votes = tournament.bracket.allMatches.map(m => {
+            if (!m.winner) return '0';
+            return m.winner.id === m.song1.id ? '1' : '2';
+        }).join('');
+
+        const payload = {
+            s: songsData,
+            v: votes,
+            id: tournament.id
+        };
+
+        const json = JSON.stringify(payload);
+        return LZString.compressToEncodedURIComponent(json);
     } catch (error) {
         console.error('Error encoding tournament:', error);
         return null;
@@ -206,8 +231,45 @@ export const encodeTournament = (tournament) => {
 // Decode tournament from URL param
 export const decodeTournament = (encoded) => {
     try {
-        const json = decodeURIComponent(atob(encoded));
-        return JSON.parse(json);
+        const json = LZString.decompressFromEncodedURIComponent(encoded);
+        if (!json) return null;
+
+        const payload = JSON.parse(json);
+
+        // Reconstruct songs
+        const songs = payload.s.map(d => ({
+            id: d.i,
+            url: d.u,
+            title: d.t,
+            platform: d.p,
+            thumbnail: d.th,
+            embedUrl: d.p === 'youtube'
+                ? `https://www.youtube.com/embed/${d.i.split('-')[1]}`
+                : `https://open.spotify.com/embed/track/${d.i.split('-')[1]}`
+        }));
+
+        // Generate bracket (without shuffling to preserve order)
+        const bracket = generateBracket(songs, false);
+
+        // Replay votes
+        const votes = payload.v.split('');
+        let currentBracket = bracket;
+
+        votes.forEach((vote, index) => {
+            if (vote === '0') return;
+
+            const match = currentBracket.allMatches[index];
+            if (match && match.song1 && match.song2) {
+                const winner = vote === '1' ? match.song1 : match.song2;
+                currentBracket = recordVote(currentBracket, match.id, winner);
+            }
+        });
+
+        return {
+            id: payload.id,
+            songs,
+            bracket: currentBracket
+        };
     } catch (error) {
         console.error('Error decoding tournament:', error);
         return null;

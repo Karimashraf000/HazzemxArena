@@ -70,7 +70,18 @@ const YouTubeSearch = ({ onAddSong, disabled }) => {
 
                 setResults(mockResults);
                 if (mockResults.length === 0) {
-                    setError('No results found (Demo Mode: try "Rick", "Psy", "Despacito")');
+                    // Fallback for demo mode if no matches
+                    setResults([
+                        {
+                            id: { videoId: 'demo1' },
+                            snippet: {
+                                title: `Demo Result: ${query}`,
+                                channelTitle: 'Demo Channel',
+                                thumbnails: { high: { url: 'https://via.placeholder.com/120x68?text=Demo+Video' } }
+                            }
+                        }
+                    ]);
+                    setError('Demo Mode: Showing placeholder result. Add an API Key for real search.');
                 }
             } else {
                 // Real API Call
