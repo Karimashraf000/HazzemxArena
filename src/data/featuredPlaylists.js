@@ -5,39 +5,38 @@ export const featuredPlaylists = [
         description: 'The biggest songs taking over the world right now.',
         coverImage: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&q=80',
         songs: [
-
-            { url: 'https://youtu.be/15kMBa_RrJg?si=T9cBcVAe7FyxLbC8' }, // elw2t el daye3
-            { url: 'https://youtu.be/GLbmfUOaIbo?si=RjHrHGwWIs-Gtq0v' }, // Emshi
-            { url: 'https://youtu.be/KENthSpzc-I?si=tFel_1P5IshxBAnE' }, // mesh da elly choiceit
-            { url: 'https://youtu.be/HlXwiiFd-_c?si=frsP5nyQQLkB98HN' }, // kol she2 beymoot
-            { url: 'https://youtu.be/J7z_hLGtawk?si=nU5FsH5ZS5RuAjOV' }, // Amal2
-            { url: 'https://youtu.be/e915Gv5C_S0?si=x6Djak-5igkAcZBQ' }, // zehab w 3awda
-            { url: 'https://youtu.be/3AGqOKEFbaI?si=LUZ_bLMGSZEo6KHW' }, // saleeny
-            { url: 'https://youtu.be/Tf9j0hC-ONY?si=TKN9FsZv9-xWhmk7' }, // shahr 12
-            { url: 'https://youtu.be/VrtnKJ6XGX4?si=9_Sk0bjd61o6y1_8' }, //Law nasiany
-            { url: 'https://youtu.be/aV2uaQSB63w?si=Xz2SjD5tHtTS_OHI' }, // el gholaf
-            { url: 'https://youtu.be/i2RXAlGyKic?si=ITjHobMb2QJiy2bW' }, // eh eh da
-            { url: 'https://youtu.be/JgPC3SrOg6M?si=vsLOGhX8Rqrjxksr' }, // nsena w mahlefnash
-            { url: 'https://youtu.be/2Rzsji-J8cc?si=g8Cj2FPneP7dvh6_' }, // Allomk
-            { url: 'https://youtu.be/H_b83DFkUTY?si=jGooJSlK8KzPidtU' }, // kan fi sora
-            { url: 'https://youtu.be/aZhTP0I9YnM?si=O1-ZHl47bPQOQDcF' }, // Etnen blel
-            { url: 'https://youtu.be/WwB5w-Rt88k?si=9iQ6Xx3bHXffy1Jk' }, // 21
-            { url: 'https://youtu.be/r9N-Oz-0xGk?si=nTUVI_UURYBkWZZE' }, // kan nefsy
-            { url: 'https://youtu.be/2bEQvnP4D5o?si=3QzLP8VWnyElPIce' }, // Hal de kat
-            { url: 'https://youtu.be/UJ3FvOcw4lQ?si=I2t1ps7VJcZiWBuY' }, // skerty
-            { url: 'https://youtu.be/P7Ol48N4_ms?si=kbSIPL6f3j_4y8nH' }, // wahed wahed
-            { url: 'https://youtu.be/KdUsu-aZE0A?si=GHh9ftUgNpp0LtO_' }, // skhent
-            { url: 'https://youtu.be/NJBLQb3_YVA?si=_tmpK1ovSalztqJW' }, // el bosla da3et
-            { url: 'https://youtu.be/CRlRF3aWMeU?si=RWkCxh9MJ8-Mmuol' }, // troh l meen
-            { url: 'https://youtu.be/_RHIECWv728?si=cGXlKV4QGeJKW-k8' }, // el bakht
-            { url: 'https://youtu.be/-T3BTvhivm8?si=lDJl9B1Ai_xf6dPT' }, //  3azrael
-            { url: 'https://youtu.be/cQTi68h_xfY?si=hG8ztDesGpH1W7-p' }, // Shahr2
-            { url: 'https://youtu.be/9HsUe2ot4Yk?si=XeGBcwCoeYPj_oaA' }, // toht
-            { url: 'https://youtu.be/MJPScx5tB9Q?si=OtWVvmIh_v0ZaKwj' }, // horya
-            { url: 'https://youtu.be/ztn7DdtetWw?si=4ADpyMMr59KjlPiZ' }, // Atraxia
-            { url: 'https://youtu.be/_lTr6M4Y4R8?si=v7I7xamdcVTf2gP4' }, // dahya
-            { url: 'https://youtu.be/AZ-QxTZFDkc?si=waL5bYWHBpUXIx-Z' }, // fawater el 3etab
-            { url: 'https://youtu.be/F6iinuQHSmg?si=QF8uiNSAGlevyyx4' }  // Bent el ehh
+            { id: 'rap1', name: 'Elw2t El Daye3', image: 'https://img.youtube.com/vi/15kMBa_RrJg/hqdefault.jpg', url: 'https://youtu.be/15kMBa_RrJg', embedUrl: 'https://www.youtube.com/embed/15kMBa_RrJg' },
+            { id: 'rap2', name: 'Emshi', image: 'https://img.youtube.com/vi/GLbmfUOaIbo/hqdefault.jpg', url: 'https://youtu.be/GLbmfUOaIbo', embedUrl: 'https://www.youtube.com/embed/GLbmfUOaIbo' },
+            { id: 'rap3', name: 'Mesh Da Elly Choiceit', image: 'https://img.youtube.com/vi/KENthSpzc-I/hqdefault.jpg', url: 'https://youtu.be/KENthSpzc-I', embedUrl: 'https://www.youtube.com/embed/KENthSpzc-I' },
+            { id: 'rap4', name: 'Kol She2 Beymoot', image: 'https://img.youtube.com/vi/HlXwiiFd-_c/hqdefault.jpg', url: 'https://youtu.be/HlXwiiFd-_c', embedUrl: 'https://www.youtube.com/embed/HlXwiiFd-_c' },
+            { id: 'rap5', name: 'Amal 2', image: 'https://img.youtube.com/vi/J7z_hLGtawk/hqdefault.jpg', url: 'https://youtu.be/J7z_hLGtawk', embedUrl: 'https://www.youtube.com/embed/J7z_hLGtawk' },
+            { id: 'rap6', name: 'Zehab w 3awda', image: 'https://img.youtube.com/vi/e915Gv5C_S0/hqdefault.jpg', url: 'https://youtu.be/e915Gv5C_S0', embedUrl: 'https://www.youtube.com/embed/e915Gv5C_S0' },
+            { id: 'rap7', name: 'Saleeny', image: 'https://img.youtube.com/vi/3AGqOKEFbaI/hqdefault.jpg', url: 'https://youtu.be/3AGqOKEFbaI', embedUrl: 'https://www.youtube.com/embed/3AGqOKEFbaI' },
+            { id: 'rap8', name: 'Shahr 12', image: 'https://img.youtube.com/vi/Tf9j0hC-ONY/hqdefault.jpg', url: 'https://youtu.be/Tf9j0hC-ONY', embedUrl: 'https://www.youtube.com/embed/Tf9j0hC-ONY' },
+            { id: 'rap9', name: 'Law Nasiany', image: 'https://img.youtube.com/vi/VrtnKJ6XGX4/hqdefault.jpg', url: 'https://youtu.be/VrtnKJ6XGX4', embedUrl: 'https://www.youtube.com/embed/VrtnKJ6XGX4' },
+            { id: 'rap10', name: 'El Gholaf', image: 'https://img.youtube.com/vi/aV2uaQSB63w/hqdefault.jpg', url: 'https://youtu.be/aV2uaQSB63w', embedUrl: 'https://www.youtube.com/embed/aV2uaQSB63w' },
+            { id: 'rap11', name: 'Eh Eh Da', image: 'https://img.youtube.com/vi/i2RXAlGyKic/hqdefault.jpg', url: 'https://youtu.be/i2RXAlGyKic', embedUrl: 'https://www.youtube.com/embed/i2RXAlGyKic' },
+            { id: 'rap12', name: 'Nsena w Mahlefnash', image: 'https://img.youtube.com/vi/JgPC3SrOg6M/hqdefault.jpg', url: 'https://youtu.be/JgPC3SrOg6M', embedUrl: 'https://www.youtube.com/embed/JgPC3SrOg6M' },
+            { id: 'rap13', name: 'Allomk', image: 'https://img.youtube.com/vi/2Rzsji-J8cc/hqdefault.jpg', url: 'https://youtu.be/2Rzsji-J8cc', embedUrl: 'https://www.youtube.com/embed/2Rzsji-J8cc' },
+            { id: 'rap14', name: 'Kan Fi Sora', image: 'https://img.youtube.com/vi/H_b83DFkUTY/hqdefault.jpg', url: 'https://youtu.be/H_b83DFkUTY', embedUrl: 'https://www.youtube.com/embed/H_b83DFkUTY' },
+            { id: 'rap15', name: 'Etnen Blel', image: 'https://img.youtube.com/vi/aZhTP0I9YnM/hqdefault.jpg', url: 'https://youtu.be/aZhTP0I9YnM', embedUrl: 'https://www.youtube.com/embed/aZhTP0I9YnM' },
+            { id: 'rap16', name: '21', image: 'https://img.youtube.com/vi/WwB5w-Rt88k/hqdefault.jpg', url: 'https://youtu.be/WwB5w-Rt88k', embedUrl: 'https://www.youtube.com/embed/WwB5w-Rt88k' },
+            { id: 'rap17', name: 'Kan Nefsy', image: 'https://img.youtube.com/vi/r9N-Oz-0xGk/hqdefault.jpg', url: 'https://youtu.be/r9N-Oz-0xGk', embedUrl: 'https://www.youtube.com/embed/r9N-Oz-0xGk' },
+            { id: 'rap18', name: 'Hal De Kat', image: 'https://img.youtube.com/vi/2bEQvnP4D5o/hqdefault.jpg', url: 'https://youtu.be/2bEQvnP4D5o', embedUrl: 'https://www.youtube.com/embed/2bEQvnP4D5o' },
+            { id: 'rap19', name: 'Skerty', image: 'https://img.youtube.com/vi/UJ3FvOcw4lQ/hqdefault.jpg', url: 'https://youtu.be/UJ3FvOcw4lQ', embedUrl: 'https://www.youtube.com/embed/UJ3FvOcw4lQ' },
+            { id: 'rap20', name: 'Wahed Wahed', image: 'https://img.youtube.com/vi/P7Ol48N4_ms/hqdefault.jpg', url: 'https://youtu.be/P7Ol48N4_ms', embedUrl: 'https://www.youtube.com/embed/P7Ol48N4_ms' },
+            { id: 'rap21', name: 'Skhent', image: 'https://img.youtube.com/vi/KdUsu-aZE0A/hqdefault.jpg', url: 'https://youtu.be/KdUsu-aZE0A', embedUrl: 'https://www.youtube.com/embed/KdUsu-aZE0A' },
+            { id: 'rap22', name: 'El Bosla Da3et', image: 'https://img.youtube.com/vi/NJBLQb3_YVA/hqdefault.jpg', url: 'https://youtu.be/NJBLQb3_YVA', embedUrl: 'https://www.youtube.com/embed/NJBLQb3_YVA' },
+            { id: 'rap23', name: 'Troh L Meen', image: 'https://img.youtube.com/vi/CRlRF3aWMeU/hqdefault.jpg', url: 'https://youtu.be/CRlRF3aWMeU', embedUrl: 'https://www.youtube.com/embed/CRlRF3aWMeU' },
+            { id: 'rap24', name: 'El Bakht', image: 'https://img.youtube.com/vi/_RHIECWv728/hqdefault.jpg', url: 'https://youtu.be/_RHIECWv728', embedUrl: 'https://www.youtube.com/embed/_RHIECWv728' },
+            { id: 'rap25', name: '3azrael', image: 'https://img.youtube.com/vi/-T3BTvhivm8/hqdefault.jpg', url: 'https://youtu.be/-T3BTvhivm8', embedUrl: 'https://www.youtube.com/embed/-T3BTvhivm8' },
+            { id: 'rap26', name: 'Shahr 2', image: 'https://img.youtube.com/vi/cQTi68h_xfY/hqdefault.jpg', url: 'https://youtu.be/cQTi68h_xfY', embedUrl: 'https://www.youtube.com/embed/cQTi68h_xfY' },
+            { id: 'rap27', name: 'Toht', image: 'https://img.youtube.com/vi/9HsUe2ot4Yk/hqdefault.jpg', url: 'https://youtu.be/9HsUe2ot4Yk', embedUrl: 'https://www.youtube.com/embed/9HsUe2ot4Yk' },
+            { id: 'rap28', name: 'Horya', image: 'https://img.youtube.com/vi/MJPScx5tB9Q/hqdefault.jpg', url: 'https://youtu.be/MJPScx5tB9Q', embedUrl: 'https://www.youtube.com/embed/MJPScx5tB9Q' },
+            { id: 'rap29', name: 'Atraxia', image: 'https://img.youtube.com/vi/ztn7DdtetWw/hqdefault.jpg', url: 'https://youtu.be/ztn7DdtetWw', embedUrl: 'https://www.youtube.com/embed/ztn7DdtetWw' },
+            { id: 'rap30', name: 'Dahya', image: 'https://img.youtube.com/vi/_lTr6M4Y4R8/hqdefault.jpg', url: 'https://youtu.be/_lTr6M4Y4R8', embedUrl: 'https://www.youtube.com/embed/_lTr6M4Y4R8' },
+            { id: 'rap31', name: 'Fawater El 3etab', image: 'https://img.youtube.com/vi/AZ-QxTZFDkc/hqdefault.jpg', url: 'https://youtu.be/AZ-QxTZFDkc', embedUrl: 'https://www.youtube.com/embed/AZ-QxTZFDkc' },
+            { id: 'rap32', name: 'Bent El Ehh', image: 'https://img.youtube.com/vi/F6iinuQHSmg/hqdefault.jpg', url: 'https://youtu.be/F6iinuQHSmg', embedUrl: 'https://www.youtube.com/embed/F6iinuQHSmg' }
         ]
     },
     {
@@ -46,38 +45,38 @@ export const featuredPlaylists = [
         description: 'Timeless anthems that will live forever.',
         coverImage: 'https://images.unsplash.com/photo-1498038432885-c6f3f1b912ee?w=500&q=80',
         songs: [
-            { url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ' }, // Queen - Bohemian Rhapsody
-            { url: 'https://www.youtube.com/watch?v=l482T0yNkeo' }, // AC/DC - Highway to Hell
-            { url: 'https://www.youtube.com/watch?v=hTWKbfoikeg' }, // Nirvana - Smells Like Teen Spirit
-            { url: 'https://www.youtube.com/watch?v=1w7OgIMMRc4' }, // Guns N' Roses - Sweet Child O' Mine
-            { url: 'https://www.youtube.com/watch?v=v2AC41dglnM' }, // AC/DC - Thunderstruck
-            { url: 'https://www.youtube.com/watch?v=zRIbf6JqkNc' }, // Guns N' Roses - Sweet Child O' Mine
-            { url: 'https://www.youtube.com/watch?v=CSvFpBOe8eY' }, // System Of A Down - Chop Suey!
-            { url: 'https://www.youtube.com/watch?v=kXYiU_JCYtU' }, // Linkin Park - Numb
-            { url: 'https://www.youtube.com/watch?v=eVTXPUF4Oz4' }, // Linkin Park - In The End
-            { url: 'https://www.youtube.com/watch?v=8SbUC-UaAxE' }, // Guns N' Roses - November Rain
-            { url: 'https://www.youtube.com/watch?v=Lo2qQmj0_h4' }, // Red Hot Chili Peppers - Californication
-            { url: 'https://www.youtube.com/watch?v=BZNQSP9qD7Y' }, // Red Hot Chili Peppers - Otherside
-            { url: 'https://www.youtube.com/watch?v=sb2np1HGqzg' }, // Red Hot Chili Peppers - By The Way
-            { url: 'https://www.youtube.com/watch?v=mzJj5-lubeM' }, // Red Hot Chili Peppers - Can't Stop
-            { url: 'https://www.youtube.com/watch?v=Q0oIoR9mLwc' }, // Red Hot Chili Peppers - Snow (Hey Oh)
-            { url: 'https://www.youtube.com/watch?v=YlUKcNNmywk' }, // Red Hot Chili Peppers - Under The Bridge
-            { url: 'https://www.youtube.com/watch?v=Mr_uHJPUlO8' }, // Red Hot Chili Peppers - Dani California
-            { url: 'https://www.youtube.com/watch?v=qfNmyxV2Ncw' }, // Red Hot Chili Peppers - Scar Tissue
-            { url: 'https://www.youtube.com/watch?v=0I647GU3Jsc' }, // Red Hot Chili Peppers - Otherside
-            { url: 'https://www.youtube.com/watch?v=RtBbinpK5XI' }, // Red Hot Chili Peppers - Californication
-            { url: 'https://www.youtube.com/watch?v=GLvohMXgcBo' }, // Red Hot Chili Peppers - Under The Bridge
-            { url: 'https://www.youtube.com/watch?v=lwlogyj7nFE' }, // Red Hot Chili Peppers - Dani California
-            { url: 'https://www.youtube.com/watch?v=mzJj5-lubeM' }, // Red Hot Chili Peppers - Can't Stop
-            { url: 'https://www.youtube.com/watch?v=sb2np1HGqzg' }, // Red Hot Chili Peppers - By The Way
-            { url: 'https://www.youtube.com/watch?v=Q0oIoR9mLwc' }, // Red Hot Chili Peppers - Snow (Hey Oh)
-            { url: 'https://www.youtube.com/watch?v=YlUKcNNmywk' }, // Red Hot Chili Peppers - Under The Bridge
-            { url: 'https://www.youtube.com/watch?v=Mr_uHJPUlO8' }, // Red Hot Chili Peppers - Dani California
-            { url: 'https://www.youtube.com/watch?v=qfNmyxV2Ncw' }, // Red Hot Chili Peppers - Scar Tissue
-            { url: 'https://www.youtube.com/watch?v=0I647GU3Jsc' }, // Red Hot Chili Peppers - Otherside
-            { url: 'https://www.youtube.com/watch?v=RtBbinpK5XI' }, // Red Hot Chili Peppers - Californication
-            { url: 'https://www.youtube.com/watch?v=GLvohMXgcBo' }, // Red Hot Chili Peppers - Under The Bridge
-            { url: 'https://www.youtube.com/watch?v=lwlogyj7nFE' }  // Red Hot Chili Peppers - Dani California
+            { id: 'rock1', name: 'Bohemian Rhapsody - Queen', image: 'https://img.youtube.com/vi/fJ9rUzIMcZQ/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=fJ9rUzIMcZQ', embedUrl: 'https://www.youtube.com/embed/fJ9rUzIMcZQ' },
+            { id: 'rock2', name: 'Highway to Hell - AC/DC', image: 'https://img.youtube.com/vi/l482T0yNkeo/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=l482T0yNkeo', embedUrl: 'https://www.youtube.com/embed/l482T0yNkeo' },
+            { id: 'rock3', name: 'Smells Like Teen Spirit - Nirvana', image: 'https://img.youtube.com/vi/hTWKbfoikeg/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=hTWKbfoikeg', embedUrl: 'https://www.youtube.com/embed/hTWKbfoikeg' },
+            { id: 'rock4', name: 'Sweet Child O\' Mine - Guns N\' Roses', image: 'https://img.youtube.com/vi/1w7OgIMMRc4/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=1w7OgIMMRc4', embedUrl: 'https://www.youtube.com/embed/1w7OgIMMRc4' },
+            { id: 'rock5', name: 'Thunderstruck - AC/DC', image: 'https://img.youtube.com/vi/v2AC41dglnM/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=v2AC41dglnM', embedUrl: 'https://www.youtube.com/embed/v2AC41dglnM' },
+            { id: 'rock6', name: 'Chop Suey! - System Of A Down', image: 'https://img.youtube.com/vi/CSvFpBOe8eY/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=CSvFpBOe8eY', embedUrl: 'https://www.youtube.com/embed/CSvFpBOe8eY' },
+            { id: 'rock7', name: 'Numb - Linkin Park', image: 'https://img.youtube.com/vi/kXYiU_JCYtU/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=kXYiU_JCYtU', embedUrl: 'https://www.youtube.com/embed/kXYiU_JCYtU' },
+            { id: 'rock8', name: 'In The End - Linkin Park', image: 'https://img.youtube.com/vi/eVTXPUF4Oz4/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=eVTXPUF4Oz4', embedUrl: 'https://www.youtube.com/embed/eVTXPUF4Oz4' },
+            { id: 'rock9', name: 'November Rain - Guns N\' Roses', image: 'https://img.youtube.com/vi/8SbUC-UaAxE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=8SbUC-UaAxE', embedUrl: 'https://www.youtube.com/embed/8SbUC-UaAxE' },
+            { id: 'rock10', name: 'Californication - RHCP', image: 'https://img.youtube.com/vi/Lo2qQmj0_h4/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Lo2qQmj0_h4', embedUrl: 'https://www.youtube.com/embed/Lo2qQmj0_h4' },
+            { id: 'rock11', name: 'Otherside - RHCP', image: 'https://img.youtube.com/vi/BZNQSP9qD7Y/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=BZNQSP9qD7Y', embedUrl: 'https://www.youtube.com/embed/BZNQSP9qD7Y' },
+            { id: 'rock12', name: 'By The Way - RHCP', image: 'https://img.youtube.com/vi/sb2np1HGqzg/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=sb2np1HGqzg', embedUrl: 'https://www.youtube.com/embed/sb2np1HGqzg' },
+            { id: 'rock13', name: 'Can\'t Stop - RHCP', image: 'https://img.youtube.com/vi/mzJj5-lubeM/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=mzJj5-lubeM', embedUrl: 'https://www.youtube.com/embed/mzJj5-lubeM' },
+            { id: 'rock14', name: 'Snow (Hey Oh) - RHCP', image: 'https://img.youtube.com/vi/Q0oIoR9mLwc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Q0oIoR9mLwc', embedUrl: 'https://www.youtube.com/embed/Q0oIoR9mLwc' },
+            { id: 'rock15', name: 'Under The Bridge - RHCP', image: 'https://img.youtube.com/vi/YlUKcNNmywk/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=YlUKcNNmywk', embedUrl: 'https://www.youtube.com/embed/YlUKcNNmywk' },
+            { id: 'rock16', name: 'Dani California - RHCP', image: 'https://img.youtube.com/vi/Mr_uHJPUlO8/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Mr_uHJPUlO8', embedUrl: 'https://www.youtube.com/embed/Mr_uHJPUlO8' },
+            { id: 'rock17', name: 'Scar Tissue - RHCP', image: 'https://img.youtube.com/vi/qfNmyxV2Ncw/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=qfNmyxV2Ncw', embedUrl: 'https://www.youtube.com/embed/qfNmyxV2Ncw' },
+            { id: 'rock18', name: 'Otherside - RHCP (Live)', image: 'https://img.youtube.com/vi/0I647GU3Jsc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=0I647GU3Jsc', embedUrl: 'https://www.youtube.com/embed/0I647GU3Jsc' },
+            { id: 'rock19', name: 'Californication (Live)', image: 'https://img.youtube.com/vi/RtBbinpK5XI/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=RtBbinpK5XI', embedUrl: 'https://www.youtube.com/embed/RtBbinpK5XI' },
+            { id: 'rock20', name: 'Under The Bridge (Live)', image: 'https://img.youtube.com/vi/GLvohMXgcBo/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=GLvohMXgcBo', embedUrl: 'https://www.youtube.com/embed/GLvohMXgcBo' },
+            { id: 'rock21', name: 'Dani California (Live)', image: 'https://img.youtube.com/vi/lwlogyj7nFE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=lwlogyj7nFE', embedUrl: 'https://www.youtube.com/embed/lwlogyj7nFE' },
+            { id: 'rock22', name: 'Can\'t Stop (Alt)', image: 'https://img.youtube.com/vi/mzJj5-lubeM/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=mzJj5-lubeM', embedUrl: 'https://www.youtube.com/embed/mzJj5-lubeM' },
+            { id: 'rock23', name: 'By The Way (Alt)', image: 'https://img.youtube.com/vi/sb2np1HGqzg/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=sb2np1HGqzg', embedUrl: 'https://www.youtube.com/embed/sb2np1HGqzg' },
+            { id: 'rock24', name: 'Snow (Hey Oh) (Alt)', image: 'https://img.youtube.com/vi/Q0oIoR9mLwc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Q0oIoR9mLwc', embedUrl: 'https://www.youtube.com/embed/Q0oIoR9mLwc' },
+            { id: 'rock25', name: 'Under The Bridge (Alt)', image: 'https://img.youtube.com/vi/YlUKcNNmywk/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=YlUKcNNmywk', embedUrl: 'https://www.youtube.com/embed/YlUKcNNmywk' },
+            { id: 'rock26', name: 'Dani California (Alt)', image: 'https://img.youtube.com/vi/Mr_uHJPUlO8/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Mr_uHJPUlO8', embedUrl: 'https://www.youtube.com/embed/Mr_uHJPUlO8' },
+            { id: 'rock27', name: 'Scar Tissue (Alt)', image: 'https://img.youtube.com/vi/qfNmyxV2Ncw/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=qfNmyxV2Ncw', embedUrl: 'https://www.youtube.com/embed/qfNmyxV2Ncw' },
+            { id: 'rock28', name: 'Otherside (Alt)', image: 'https://img.youtube.com/vi/0I647GU3Jsc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=0I647GU3Jsc', embedUrl: 'https://www.youtube.com/embed/0I647GU3Jsc' },
+            { id: 'rock29', name: 'Californication (Alt)', image: 'https://img.youtube.com/vi/RtBbinpK5XI/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=RtBbinpK5XI', embedUrl: 'https://www.youtube.com/embed/RtBbinpK5XI' },
+            { id: 'rock30', name: 'Under The Bridge (Final)', image: 'https://img.youtube.com/vi/GLvohMXgcBo/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=GLvohMXgcBo', embedUrl: 'https://www.youtube.com/embed/GLvohMXgcBo' },
+            { id: 'rock31', name: 'Dani California (Final)', image: 'https://img.youtube.com/vi/lwlogyj7nFE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=lwlogyj7nFE', embedUrl: 'https://www.youtube.com/embed/lwlogyj7nFE' },
+            { id: 'rock32', name: 'Sweet Child O\' Mine (Alt)', image: 'https://img.youtube.com/vi/zRIbf6JqkNc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=zRIbf6JqkNc', embedUrl: 'https://www.youtube.com/embed/zRIbf6JqkNc' }
         ]
     }
 ];

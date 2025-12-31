@@ -14,50 +14,50 @@ export const parseYouTubeUrl = (url) => {
     return null;
 };
 
-// Parse Spotify URL to extract track ID
-export const parseSpotifyUrl = (url) => {
-    const patterns = [
-        /spotify\.com\/track\/([^?&\n]+)/,
-        /spotify\.com\/embed\/track\/([^?&\n]+)/
-    ];
-
-    for (const pattern of patterns) {
-        const match = url.match(pattern);
-        if (match) {
-            return match[1];
-        }
-    }
-    return null;
-};
-
 // Determine platform from URL
 export const detectPlatform = (url) => {
     if (url.includes('youtube.com') || url.includes('youtu.be')) {
         return 'youtube';
     }
-    if (url.includes('spotify.com')) {
-        return 'spotify';
-    }
     return null;
 };
 
+import { getVideoDetails } from './youtubeApi';
+
 // Create song object from URL
-export const createSongFromUrl = (url) => {
+export const createSongFromUrl = async (url) => {
     const platform = detectPlatform(url);
 
     if (!platform) {
-        throw new Error('Invalid URL. Please use YouTube or Spotify links.');
+        throw new Error('Invalid URL. Please use YouTube links.');
     }
 
     let songId;
     if (platform === 'youtube') {
         songId = parseYouTubeUrl(url);
-    } else if (platform === 'spotify') {
-        songId = parseSpotifyUrl(url);
     }
 
     if (!songId) {
         throw new Error('Could not extract song ID from URL.');
+    }
+
+    let title = 'YouTube Song';
+    let thumbnail = null;
+    let artist = 'Unknown Artist';
+
+    // Fetch metadata for YouTube
+    if (platform === 'youtube') {
+        try {
+            const snippet = await getVideoDetails(songId);
+            if (snippet) {
+                title = snippet.title;
+                thumbnail = snippet.thumbnails.high?.url || snippet.thumbnails.medium?.url || snippet.thumbnails.default?.url;
+                artist = snippet.channelTitle;
+            }
+        } catch (error) {
+            console.warn('Failed to fetch YouTube metadata:', error);
+            // Continue with default values
+        }
     }
 
     return {
@@ -65,14 +65,10 @@ export const createSongFromUrl = (url) => {
         platform,
         songId,
         url,
-        embedUrl: platform === 'youtube'
-            ? `https://www.youtube.com/embed/${songId}`
-            : `https://open.spotify.com/embed/track/${songId}`,
-        thumbnail: platform === 'youtube'
-            ? `https://img.youtube.com/vi/${songId}/hqdefault.jpg`
-            : null,
-        title: platform === 'youtube' ? 'YouTube Song' : 'Spotify Track',
-        artist: 'Unknown Artist'
+        embedUrl: `https://www.youtube.com/embed/${songId}`,
+        thumbnail: thumbnail || `https://img.youtube.com/vi/${songId}/hqdefault.jpg`,
+        title,
+        artist
     };
 };
 

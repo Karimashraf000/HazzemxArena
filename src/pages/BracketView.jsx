@@ -52,8 +52,8 @@ const BracketView = () => {
         if (!match) return null;
 
         const isComplete = match.winner !== null;
-        const song1Name = match.song1?.title || 'TBD';
-        const song2Name = match.song2?.title || 'TBD';
+        const song1Name = match.song1?.name || match.song1?.title || 'TBD';
+        const song2Name = match.song2?.name || match.song2?.title || 'TBD';
         const isWinner1 = match.winner === match.song1;
         const isWinner2 = match.winner === match.song2;
 
@@ -105,7 +105,7 @@ const BracketView = () => {
                         )}
                         {progress.isComplete && (
                             <div className="champion-announcement animate-scaleIn">
-                                <h2>🏆 Champion: {bracket.final[0].winner?.title} 🏆</h2>
+                                <h2>🏆 Champion: {bracket.final[0].winner?.name || bracket.final[0].winner?.title} 🏆</h2>
                             </div>
                         )}
                         <button className="btn btn-secondary" onClick={handleShare}>
@@ -118,40 +118,60 @@ const BracketView = () => {
                 </div>
 
                 <div className="bracket-rounds">
-                    <div className="round">
-                        <h3 className="round-title">Round of 32</h3>
-                        <div className="matches">
-                            {bracket.roundOf32.map((match, i) => renderMatch(match, i))}
-                        </div>
-                    </div>
-
-                    <div className="round">
-                        <h3 className="round-title">Round of 16</h3>
-                        <div className="matches">
-                            {bracket.roundOf16.map((match, i) => renderMatch(match, i))}
-                        </div>
-                    </div>
-
-                    <div className="round">
-                        <h3 className="round-title">Quarter Finals</h3>
-                        <div className="matches">
-                            {bracket.quarterFinals.map((match, i) => renderMatch(match, i))}
-                        </div>
-                    </div>
-
-                    <div className="round">
-                        <h3 className="round-title">Semi Finals</h3>
-                        <div className="matches">
-                            {bracket.semiFinals.map((match, i) => renderMatch(match, i))}
-                        </div>
-                    </div>
-
-                    <div className="round">
-                        <h3 className="round-title">Final</h3>
-                        <div className="matches">
-                            {bracket.final.map((match, i) => renderMatch(match, i))}
-                        </div>
-                    </div>
+                    {bracket.rounds ? (
+                        bracket.rounds.map((roundMatches, i) => (
+                            <div key={`round-${i}`} className="round">
+                                <h3 className="round-title">{roundMatches[0].round}</h3>
+                                <div className="matches">
+                                    {roundMatches.map((match, j) => renderMatch(match, j))}
+                                </div>
+                            </div>
+                        ))
+                    ) : (
+                        // Fallback for old bracket structure if any
+                        <>
+                            {bracket.roundOf32 && (
+                                <div className="round">
+                                    <h3 className="round-title">Round of 32</h3>
+                                    <div className="matches">
+                                        {bracket.roundOf32.map((match, i) => renderMatch(match, i))}
+                                    </div>
+                                </div>
+                            )}
+                            {bracket.roundOf16 && (
+                                <div className="round">
+                                    <h3 className="round-title">Round of 16</h3>
+                                    <div className="matches">
+                                        {bracket.roundOf16.map((match, i) => renderMatch(match, i))}
+                                    </div>
+                                </div>
+                            )}
+                            {bracket.quarterFinals && (
+                                <div className="round">
+                                    <h3 className="round-title">Quarter Finals</h3>
+                                    <div className="matches">
+                                        {bracket.quarterFinals.map((match, i) => renderMatch(match, i))}
+                                    </div>
+                                </div>
+                            )}
+                            {bracket.semiFinals && (
+                                <div className="round">
+                                    <h3 className="round-title">Semi Finals</h3>
+                                    <div className="matches">
+                                        {bracket.semiFinals.map((match, i) => renderMatch(match, i))}
+                                    </div>
+                                </div>
+                            )}
+                            {bracket.final && (
+                                <div className="round">
+                                    <h3 className="round-title">Final</h3>
+                                    <div className="matches">
+                                        {bracket.final.map((match, i) => renderMatch(match, i))}
+                                    </div>
+                                </div>
+                            )}
+                        </>
+                    )}
                 </div>
             </div>
         </div>

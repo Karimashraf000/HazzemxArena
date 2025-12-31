@@ -1,27 +1,27 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ParticlesBackground from './components/ParticlesBackground';
-import HomePage from './pages/HomePage';
-import TournamentSetup from './pages/TournamentSetup';
-import BattleView from './pages/BattleView';
-import BracketView from './pages/BracketView';
 import { TournamentProvider } from './context/TournamentContext';
+import ParticlesBackground from './components/ParticlesBackground';
+import Home from './pages/Home';
+import TournamentSetup from './pages/TournamentSetup';
+import BracketView from './pages/BracketView';
+import BattleView from './pages/BattleView';
 import './App.css';
 
 function App() {
   return (
-    <TournamentProvider>
-      <Router>
-        <div className="App">
+    <Router>
+      <TournamentProvider>
+        <div className="app-container">
           <ParticlesBackground />
           <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/setup" element={<TournamentSetup />} />
-            <Route path="/battle/:battleId" element={<BattleView />} />
+            <Route path="/" element={<Home />} />
+            <Route path="/custom" element={<TournamentSetup />} />
             <Route path="/bracket/:tournamentId" element={<BracketView />} />
+            <Route path="/battle/:battleId" element={<BattleView />} />
           </Routes>
         </div>
-      </Router>
-    </TournamentProvider>
+      </TournamentProvider>
+    </Router>
   );
 }
 

@@ -17,7 +17,9 @@ export const TournamentProvider = ({ children }) => {
     const [currentBattle, setCurrentBattle] = useState(null);
     const [tournamentId, setTournamentId] = useState(null);
 
-    // Initialize tournament from URL if exists
+    const [tournamentSize, setTournamentSize] = useState(32);
+
+
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
         const encodedTournament = params.get('t');
@@ -28,6 +30,26 @@ export const TournamentProvider = ({ children }) => {
                 setSongs(decoded.songs || []);
                 setBracket(decoded.bracket || null);
                 setTournamentId(decoded.id || null);
+                if (decoded.songs.length > 0) {
+                    if (decoded.songs.length <= 8) setTournamentSize(8);
+                    else if (decoded.songs.length <= 16) setTournamentSize(16);
+                    else setTournamentSize(32);
+                }
+                return;
+            }
+        }
+
+        // Load from localStorage if no URL param
+        const saved = localStorage.getItem('currentTournament');
+        if (saved) {
+            try {
+                const state = JSON.parse(saved);
+                setSongs(state.songs || []);
+                setBracket(state.bracket || null);
+                setTournamentId(state.id || null);
+                setTournamentSize(state.size || 32);
+            } catch (e) {
+                console.error('Error loading tournament from localStorage', e);
             }
         }
     }, []);
@@ -42,8 +64,8 @@ export const TournamentProvider = ({ children }) => {
 
     // Add song to tournament
     const addSong = (song) => {
-        if (songs.length >= 32) {
-            throw new Error('Maximum 32 songs allowed');
+        if (songs.length >= tournamentSize) {
+            throw new Error(`Maximum ${tournamentSize} songs allowed`);
         }
         setSongs([...songs, song]);
     };
@@ -59,17 +81,88 @@ export const TournamentProvider = ({ children }) => {
     };
 
     // Start tournament (generate bracket)
-    const startTournament = () => {
-        if (songs.length !== 32) {
-            throw new Error('Need exactly 32 songs to start tournament');
+    const startTournament = (itemsOverride = null) => {
+        const currentItems = itemsOverride || songs;
+
+        if (currentItems.length !== tournamentSize) {
+            throw new Error(`Need exactly ${tournamentSize} competitors to start tournament`);
         }
 
-        const newBracket = generateBracket(songs);
+        const newBracket = generateBracket(currentItems, tournamentSize);
         setBracket(newBracket);
 
         // Generate unique tournament ID
         const id = 'tournament-' + Date.now();
         setTournamentId(id);
+
+        // Save to localStorage
+        const state = {
+            id,
+            songs: currentItems,
+            bracket: newBracket,
+            timestamp: Date.now(),
+            size: tournamentSize
+        };
+        localStorage.setItem('currentTournament', JSON.stringify(state));
+
+        return id;
+    };
+
+    // Fetch metadata for a list of items (URLs)
+    const fetchPlaylistMetadata = async (items) => {
+        const { createSongFromUrl } = await import('../utils/songUtils');
+        const resolvedItems = [];
+
+        for (const item of items) {
+            if (item.url && !item.name && !item.image) {
+                try {
+                    const resolved = await createSongFromUrl(item.url);
+                    resolvedItems.push(resolved);
+                } catch (error) {
+                    console.error('Failed to resolve song metadata:', item.url, error);
+                    // Fallback to basic object if resolution fails
+                    resolvedItems.push({
+                        id: `fallback-${Date.now()}-${Math.random()}`,
+                        name: 'Unknown Song',
+                        image: 'https://via.placeholder.com/300',
+                        url: item.url,
+                        platform: 'youtube'
+                    });
+                }
+            } else {
+                resolvedItems.push(item);
+            }
+        }
+        return resolvedItems;
+    };
+
+    // Start pre-built tournament
+    const startPrebuiltTournament = async (items, size) => {
+        setTournamentSize(size);
+
+        // If items are just URLs, we need to fetch metadata
+        let finalItems = items;
+        if (items.length > 0 && items[0].url && !items[0].name) {
+            finalItems = await fetchPlaylistMetadata(items);
+        }
+
+        setSongs(finalItems);
+
+        // Generate bracket and ID
+        const newBracket = generateBracket(finalItems, size);
+        setBracket(newBracket);
+        const id = 'tournament-' + Date.now();
+        setTournamentId(id);
+
+        // Save to localStorage
+        const state = {
+            id,
+            songs: finalItems,
+            bracket: newBracket,
+            timestamp: Date.now(),
+            size: size
+        };
+        localStorage.setItem('currentTournament', JSON.stringify(state));
 
         return id;
     };
@@ -91,7 +184,8 @@ export const TournamentProvider = ({ children }) => {
             id: tournamentId,
             songs,
             bracket: currentBracket || bracket,
-            timestamp: Date.now()
+            timestamp: Date.now(),
+            size: tournamentSize
         };
 
         localStorage.setItem('currentTournament', JSON.stringify(state));
@@ -102,7 +196,8 @@ export const TournamentProvider = ({ children }) => {
         const state = {
             id: tournamentId,
             songs,
-            bracket
+            bracket,
+            size: tournamentSize
         };
 
         const encoded = encodeTournament(state);
@@ -123,8 +218,10 @@ export const TournamentProvider = ({ children }) => {
 
     // Load a playlist (replace current songs)
     const loadPlaylist = (newSongs) => {
-        if (newSongs.length > 32) {
-            throw new Error('Playlist has too many songs (max 32)');
+        if (newSongs.length > tournamentSize) {
+            // Auto-resize if playlist is larger than current selection?
+            // For now, just error or truncate? Let's error to be safe.
+            throw new Error(`Playlist has too many songs (max ${tournamentSize})`);
         }
         setSongs(newSongs);
     };
@@ -170,10 +267,13 @@ export const TournamentProvider = ({ children }) => {
         bracket,
         currentBattle,
         tournamentId,
+        tournamentSize,
+        setTournamentSize,
         addSong,
         removeSong,
         clearSongs,
         startTournament,
+        startPrebuiltTournament,
         recordVote,
         getShareableUrl,
         resetTournament,

@@ -10,82 +10,120 @@ export const shuffleArray = (array) => {
     return shuffled;
 };
 
-// Generate initial tournament bracket from 32 songs
-export const generateBracket = (songs, shuffle = true) => {
-    if (songs.length !== 32) {
-        throw new Error('Tournament requires exactly 32 songs');
+// Generate initial tournament bracket from songs
+export const generateBracket = (songs, size = 32) => {
+    if (songs.length !== size) {
+        throw new Error(`Tournament requires exactly ${size} songs`);
     }
 
-    const shuffledSongs = shuffle ? shuffleArray(songs) : [...songs];
+    const shuffledSongs = shuffleArray(songs);
+    const rounds = [];
+    let matchIdCounter = 0;
 
-    // Create Round of 32 matchups
-    const roundOf32 = [];
-    for (let i = 0; i < 32; i += 2) {
-        roundOf32.push({
-            id: `r32-${i / 2}`,
-            round: 'Round of 32',
-            roundNumber: 1,
-            matchNumber: i / 2 + 1,
-            song1: shuffledSongs[i],
-            song2: shuffledSongs[i + 1],
-            winner: null,
-            votes: { song1: 0, song2: 0 }
-        });
+    // Helper to create a match
+    const createMatch = (roundName, roundNum, matchNum, s1, s2) => ({
+        id: `match-${matchIdCounter++}`,
+        round: roundName,
+        roundNumber: roundNum,
+        matchNumber: matchNum,
+        song1: s1 || null,
+        song2: s2 || null,
+        winner: null,
+        votes: { song1: 0, song2: 0 }
+    });
+
+    let currentRoundSongs = shuffledSongs;
+    let roundNum = 1;
+
+    // 1. First Round (Populated with songs)
+    const firstRoundMatches = [];
+    const firstRoundMatchCount = size / 2;
+    const firstRoundName = size === 32 ? 'Round of 32' : size === 16 ? 'Round of 16' : 'Quarter Finals';
+
+    for (let i = 0; i < size; i += 2) {
+        firstRoundMatches.push(createMatch(firstRoundName, roundNum, (i / 2) + 1, currentRoundSongs[i], currentRoundSongs[i + 1]));
+    }
+    rounds.push(firstRoundMatches);
+    roundNum++;
+
+    // 2. Subsequent Rounds (Placeholders)
+    let matchCount = firstRoundMatchCount / 2;
+    while (matchCount >= 1) {
+        const roundMatches = [];
+        let roundName = '';
+        if (matchCount === 8) roundName = 'Round of 16';
+        else if (matchCount === 4) roundName = 'Quarter Finals';
+        else if (matchCount === 2) roundName = 'Semi Finals';
+        else if (matchCount === 1) roundName = 'Final';
+
+        for (let i = 0; i < matchCount; i++) {
+            roundMatches.push(createMatch(roundName, roundNum, i + 1, null, null));
+        }
+        rounds.push(roundMatches);
+        matchCount /= 2;
+        roundNum++;
     }
 
-    // Create placeholders for subsequent rounds
-    const roundOf16 = Array(8).fill(null).map((_, i) => ({
-        id: `r16-${i}`,
-        round: 'Round of 16',
-        roundNumber: 2,
-        matchNumber: i + 1,
-        song1: null,
-        song2: null,
-        winner: null,
-        votes: { song1: 0, song2: 0 }
-    }));
+    // Flatten matches for easy lookup
+    const allMatches = rounds.flat();
 
-    const quarterFinals = Array(4).fill(null).map((_, i) => ({
-        id: `qf-${i}`,
-        round: 'Quarter Final',
-        roundNumber: 3,
-        matchNumber: i + 1,
-        song1: null,
-        song2: null,
-        winner: null,
-        votes: { song1: 0, song2: 0 }
-    }));
-
-    const semiFinals = Array(2).fill(null).map((_, i) => ({
-        id: `sf-${i}`,
-        round: 'Semi Final',
-        roundNumber: 4,
-        matchNumber: i + 1,
-        song1: null,
-        song2: null,
-        winner: null,
-        votes: { song1: 0, song2: 0 }
-    }));
-
-    const final = [{
-        id: 'final',
-        round: 'Final',
-        roundNumber: 5,
-        matchNumber: 1,
-        song1: null,
-        song2: null,
-        winner: null,
-        votes: { song1: 0, song2: 0 }
-    }];
-
-    return {
-        roundOf32,
-        roundOf16,
-        quarterFinals,
-        semiFinals,
-        final,
-        allMatches: [...roundOf32, ...roundOf16, ...quarterFinals, ...semiFinals, ...final]
+    const result = {
+        allMatches,
+        rounds,
+        final: rounds[rounds.length - 1]
     };
+
+    if (size === 32) {
+        result.roundOf32 = rounds[0];
+        result.roundOf16 = rounds[1];
+        result.quarterFinals = rounds[2];
+        result.semiFinals = rounds[3];
+    } else if (size === 16) {
+        result.roundOf16 = rounds[0];
+        result.quarterFinals = rounds[1];
+        result.semiFinals = rounds[2];
+    } else if (size === 8) {
+        result.quarterFinals = rounds[0];
+        result.semiFinals = rounds[1];
+    }
+
+    return result;
+};
+
+// Advance winner to next round
+const advanceWinner = (matches, completedMatch) => {
+    const { id, roundNumber, matchNumber, winner } = completedMatch;
+
+    // Find max round number to know if it's final
+    const maxRound = Math.max(...matches.map(m => m.roundNumber));
+
+    if (roundNumber === maxRound) {
+        return matches; // Tournament complete
+    }
+
+    // Calculate next match index
+    const nextRoundNumber = roundNumber + 1;
+    const nextMatchNumber = Math.ceil(matchNumber / 2);
+    const isFirstSlot = matchNumber % 2 !== 0;
+
+    const nextMatchIndex = matches.findIndex(m => m.roundNumber === nextRoundNumber && m.matchNumber === nextMatchNumber);
+
+    if (nextMatchIndex === -1) {
+        console.error('Could not find next match', { roundNumber, nextRoundNumber, matchNumber, nextMatchNumber });
+        return matches;
+    }
+
+    const updatedMatches = [...matches];
+    const nextMatch = { ...updatedMatches[nextMatchIndex] };
+
+    if (isFirstSlot) {
+        nextMatch.song1 = winner;
+    } else {
+        nextMatch.song2 = winner;
+    }
+
+    updatedMatches[nextMatchIndex] = nextMatch;
+    return updatedMatches;
 };
 
 // Get current battle (first unfinished match)
@@ -130,54 +168,37 @@ export const recordVote = (bracket, battleId, winner) => {
     updatedMatches[matchIndex] = match;
 
     // Advance winner to next round
-    const updatedBracket = advanceWinner(updatedMatches, match);
+    const updatedBracketMatches = advanceWinner(updatedMatches, match);
 
-    return {
+    // Reconstruct rounds structure from updated matches
+    const rounds = [];
+    const maxRound = Math.max(...updatedBracketMatches.map(m => m.roundNumber));
+    for (let i = 1; i <= maxRound; i++) {
+        rounds.push(updatedBracketMatches.filter(m => m.roundNumber === i));
+    }
+
+    const result = {
         ...bracket,
-        allMatches: updatedBracket,
-        roundOf32: updatedBracket.slice(0, 16),
-        roundOf16: updatedBracket.slice(16, 24),
-        quarterFinals: updatedBracket.slice(24, 28),
-        semiFinals: updatedBracket.slice(28, 30),
-        final: [updatedBracket[30]]
+        allMatches: updatedBracketMatches,
+        rounds,
+        final: rounds[rounds.length - 1]
     };
-};
 
-// Advance winner to next round
-const advanceWinner = (matches, completedMatch) => {
-    const { id, roundNumber, matchNumber, winner } = completedMatch;
-
-    if (roundNumber === 5) {
-        // Final match, tournament complete
-        return matches;
+    // Backward compatibility
+    if (updatedBracketMatches.length === 31) { // Size 32
+        result.roundOf32 = rounds[0];
+        result.roundOf16 = rounds[1];
+        result.quarterFinals = rounds[2];
+        result.semiFinals = rounds[3];
+    } else if (updatedBracketMatches.length === 15) { // Size 16
+        result.roundOf16 = rounds[0];
+        result.quarterFinals = rounds[1];
+        result.semiFinals = rounds[2];
+    } else if (updatedBracketMatches.length === 7) { // Size 8
+        result.quarterFinals = rounds[0];
+        result.semiFinals = rounds[1];
     }
-
-    // Calculate which match in next round
-    const nextRoundMatchIndex = Math.floor((matchNumber - 1) / 2);
-    const isFirstSlot = (matchNumber - 1) % 2 === 0;
-
-    // Find the next round match
-    const nextRoundStartIndex = {
-        1: 16, // Round of 32 -> Round of 16
-        2: 24, // Round of 16 -> Quarter Finals
-        3: 28, // Quarter Finals -> Semi Finals
-        4: 30  // Semi Finals -> Final
-    }[roundNumber];
-
-    const nextMatchIndex = nextRoundStartIndex + nextRoundMatchIndex;
-    const updatedMatches = [...matches];
-    const nextMatch = { ...updatedMatches[nextMatchIndex] };
-
-    // Place winner in appropriate slot
-    if (isFirstSlot) {
-        nextMatch.song1 = winner;
-    } else {
-        nextMatch.song2 = winner;
-    }
-
-    updatedMatches[nextMatchIndex] = nextMatch;
-
-    return updatedMatches;
+    return result;
 };
 
 // Get tournament progress
@@ -197,12 +218,12 @@ export const getTournamentProgress = (bracket) => {
 // Encode tournament to URL param
 export const encodeTournament = (tournament) => {
     try {
-        // Extreme Optimization: Store only essential fields with short keys
-        // p: platform (y/s), i: songId, t: truncated title
-        const songsData = tournament.songs.map(s => ({
-            p: s.platform === 'youtube' ? 'y' : 's',
-            i: s.songId,
-            t: s.title.substring(0, 30) // Truncate title to save space
+        // Extreme Optimization: Store only essential fields
+        // n: name, m: image (media), i: id
+        const itemsData = tournament.songs.map(s => ({
+            n: s.name || s.title,
+            m: s.image || s.thumbnail,
+            i: s.id
         }));
 
         // Create a vote string: 0=no winner, 1=song1, 2=song2
@@ -212,9 +233,10 @@ export const encodeTournament = (tournament) => {
         }).join('');
 
         const payload = {
-            s: songsData,
+            s: itemsData,
             v: votes,
-            id: tournament.id ? tournament.id.replace('tournament-', '') : Date.now().toString()
+            id: tournament.id ? tournament.id.replace('tournament-', '') : Date.now().toString(),
+            sz: tournament.size // Store size explicitly
         };
 
         const json = JSON.stringify(payload);
@@ -233,32 +255,27 @@ export const decodeTournament = (encoded) => {
 
         const payload = JSON.parse(json);
 
-        // Reconstruct full song objects
-        const songs = payload.s.map(d => {
-            const platform = d.p === 'y' ? 'youtube' : 'spotify';
-            const songId = d.i;
-            const title = d.t;
+        // Reconstruct item objects
+        const songs = payload.s.map(d => ({
+            id: d.i,
+            name: d.n,
+            title: d.n, // Backward compat
+            image: d.m,
+            thumbnail: d.m, // Backward compat
+            // Add dummy values for other fields if needed to prevent crashes
+            platform: 'generic',
+            url: '',
+            embedUrl: ''
+        }));
 
-            return {
-                id: `${platform}-${songId}-${Date.now()}`,
-                platform,
-                songId,
-                title,
-                url: platform === 'youtube'
-                    ? `https://www.youtube.com/watch?v=${songId}`
-                    : `https://open.spotify.com/track/${songId}`,
-                embedUrl: platform === 'youtube'
-                    ? `https://www.youtube.com/embed/${songId}`
-                    : `https://open.spotify.com/embed/track/${songId}`,
-                thumbnail: platform === 'youtube'
-                    ? `https://img.youtube.com/vi/${songId}/hqdefault.jpg`
-                    : null,
-                artist: 'Unknown Artist'
-            };
-        });
+        // Use stored size or infer
+        let size = payload.sz || 32;
+        if (!payload.sz) {
+            if (songs.length <= 8) size = 8;
+            else if (songs.length <= 16) size = 16;
+        }
 
-        // Generate bracket (without shuffling to preserve order)
-        const bracket = generateBracket(songs, false);
+        const bracket = generateBracket(songs, size);
 
         // Replay votes
         const votes = payload.v.split('');

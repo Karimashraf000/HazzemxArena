@@ -88,28 +88,31 @@ const BattleView = () => {
 
                 <div className="battle-arena">
                     <div className={`song-battle-card animate-slideInLeft ${voted && winner === battle.song1 ? 'winner' : voted ? 'loser' : ''}`}>
-                        <div className="card card-glow">
+                        <div className="card card-glow battle-card-content">
                             <div className="song-embed-container">
-                                <iframe
-                                    src={battle.song1.embedUrl}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="song-embed"
-                                />
+                                {battle.song1.embedUrl ? (
+                                    <iframe
+                                        src={battle.song1.embedUrl}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="song-embed"
+                                    />
+                                ) : (
+                                    <img src={battle.song1.image} alt={battle.song1.name} className="competitor-image" />
+                                )}
                             </div>
 
                             <div className="song-details">
-                                <h3>{battle.song1.title}</h3>
-                                <p className="platform-badge">{battle.song1.platform}</p>
+                                <h3>{battle.song1.name || battle.song1.title}</h3>
                             </div>
 
                             {!voted && (
                                 <button
-                                    className="btn btn-vote"
+                                    className="btn btn-vote btn-large animate-pulse"
                                     onClick={() => handleVote(battle.song1)}
                                 >
-                                    Vote for This Song 🗳️
+                                    VOTE FOR THIS 👈
                                 </button>
                             )}
 
@@ -126,28 +129,31 @@ const BattleView = () => {
                     </div>
 
                     <div className={`song-battle-card animate-slideInRight ${voted && winner === battle.song2 ? 'winner' : voted ? 'loser' : ''}`}>
-                        <div className="card card-glow">
+                        <div className="card card-glow battle-card-content">
                             <div className="song-embed-container">
-                                <iframe
-                                    src={battle.song2.embedUrl}
-                                    frameBorder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowFullScreen
-                                    className="song-embed"
-                                />
+                                {battle.song2.embedUrl ? (
+                                    <iframe
+                                        src={battle.song2.embedUrl}
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                        className="song-embed"
+                                    />
+                                ) : (
+                                    <img src={battle.song2.image} alt={battle.song2.name} className="competitor-image" />
+                                )}
                             </div>
 
                             <div className="song-details">
-                                <h3>{battle.song2.title}</h3>
-                                <p className="platform-badge">{battle.song2.platform}</p>
+                                <h3>{battle.song2.name || battle.song2.title}</h3>
                             </div>
 
                             {!voted && (
                                 <button
-                                    className="btn btn-vote"
+                                    className="btn btn-vote btn-large animate-pulse"
                                     onClick={() => handleVote(battle.song2)}
                                 >
-                                    Vote for This Song 🗳️
+                                    👉 VOTE FOR THIS
                                 </button>
                             )}
 
