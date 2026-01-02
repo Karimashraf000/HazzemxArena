@@ -1,94 +1,186 @@
 .tournament-setup {
     min-height: 100vh;
-    padding: 2rem 1rem;
+    padding: 4rem 1rem;
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 .setup-header {
     text-align: center;
-    font-size: 1.2rem;
-    color: rgba(255, 255, 255, 0.8);
+    margin-bottom: 3rem;
+}
+
+.page-title {
+    font-size: clamp(2rem, 4vw, 3.5rem);
+    font-weight: 700;
+    color: var(--text-white);
     margin-bottom: 1.5rem;
+    text-transform: uppercase;
+}
+
+.header-top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.header-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    background: var(--glass-bg);
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.size-selector {
+    background: rgba(0, 0, 0, 0.3);
+    color: var(--primary-neon);
+    border: 1px solid var(--primary-neon);
+    padding: 0.8rem 2rem;
+    border-radius: 8px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.size-selector:hover {
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.3);
+}
+
+.size-selector option {
+    background: var(--bg-deep);
+    color: var(--text-white);
+}
+
+.song-counter {
+    font-size: 1.2rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
+}
+
+.song-counter .count {
+    color: var(--primary-neon);
+    font-weight: 700;
+    font-size: 1.5rem;
 }
 
 .songs-needed {
-    color: var(--secondary-color);
+    color: var(--accent-hot-pink);
     font-weight: 600;
 }
 
 .progress-bar {
     width: 100%;
     max-width: 600px;
-    height: 8px;
+    height: 6px;
     background: rgba(255, 255, 255, 0.1);
-    border-radius: 4px;
+    border-radius: 3px;
     margin: 0 auto;
     overflow: hidden;
 }
 
 .progress-fill {
     height: 100%;
-    background: var(--primary-gradient);
-    transition: width 0.3s ease;
-    box-shadow: 0 0 10px var(--primary-color);
+    background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+    box-shadow: 0 0 10px var(--primary-neon);
 }
 
 .add-song-section {
     max-width: 800px;
     margin: 0 auto 3rem;
-    padding: 2rem;
 }
 
-.add-song-section h3 {
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+.add-method-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    border-bottom: 1px solid var(--glass-border);
+    padding-bottom: 1rem;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    font-family: var(--font-heading);
+}
+
+.tab-btn:hover {
+    color: var(--text-white);
+}
+
+.tab-btn.active {
+    color: var(--primary-neon);
+}
+
+.tab-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -17px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: var(--primary-neon);
+    box-shadow: 0 -2px 10px var(--primary-neon);
 }
 
 .instruction {
-    color: var(--text-secondary);
-    margin-bottom: 1.5rem;
-    font-size: 0.9rem;
+    color: var(--text-gray);
+    margin-bottom: 1rem;
 }
 
 .input-group {
     display: flex;
     gap: 1rem;
-    margin-bottom: 1rem;
 }
 
 .song-input {
     flex: 1;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
     padding: 1rem 1.5rem;
     border-radius: 12px;
-    color: white;
+    color: var(--text-white);
     font-size: 1rem;
     transition: all 0.3s ease;
 }
 
 .song-input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(189, 0, 255, 0.3);
-    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--primary-neon);
+    box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
 }
 
 .error-message {
-    color: #ff4d4d;
-    background: rgba(255, 77, 77, 0.1);
-    padding: 0.8rem;
+    color: var(--accent-hot-pink);
+    background: rgba(255, 0, 85, 0.1);
+    padding: 1rem;
     border-radius: 8px;
     margin-top: 1rem;
-    border: 1px solid rgba(255, 77, 77, 0.2);
+    border: 1px solid rgba(255, 0, 85, 0.2);
+    text-align: center;
 }
 
 .songs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
 }
 
 .song-item {
@@ -96,22 +188,12 @@
     align-items: center;
     padding: 1rem;
     gap: 1rem;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-}
-
-.song-item:hover {
-    transform: translateY(-2px);
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 .song-number {
     font-size: 1.2rem;
     font-weight: 700;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     min-width: 30px;
 }
 
@@ -120,12 +202,13 @@
     height: 60px;
     object-fit: cover;
     border-radius: 8px;
+    border: 1px solid var(--glass-border);
 }
 
 .song-thumbnail-placeholder {
     width: 60px;
     height: 60px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -144,11 +227,12 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: var(--text-white);
 }
 
 .song-platform {
     font-size: 0.8rem;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--primary-neon);
     text-transform: uppercase;
     letter-spacing: 1px;
 }
@@ -156,7 +240,7 @@
 .btn-remove {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.3);
+    color: var(--text-muted);
     font-size: 1.2rem;
     cursor: pointer;
     padding: 0.5rem;
@@ -165,160 +249,106 @@
 }
 
 .btn-remove:hover {
-    color: #ff4d4d;
-    background: rgba(255, 77, 77, 0.1);
+    color: var(--accent-hot-pink);
+    background: rgba(255, 0, 85, 0.1);
 }
 
 .song-item-placeholder {
-    height: 94px;
-    /* Match height of song item */
-    border: 2px dashed rgba(255, 255, 255, 0.1);
-    border-radius: 16px;
+    height: 100px;
+    border: 2px dashed var(--glass-border);
+    border-radius: 24px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: rgba(255, 255, 255, 0.1);
+    color: var(--text-muted);
     font-size: 1.5rem;
     font-weight: 700;
+    background: rgba(255, 255, 255, 0.01);
 }
 
-.start-tournament-section {
-    text-align: center;
-    margin-top: 3rem;
-    padding-bottom: 3rem;
+.action-bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    margin-top: 2rem;
+    padding-bottom: 4rem;
+}
+
+.save-playlist-group {
+    display: flex;
+    gap: 1rem;
+    background: var(--glass-bg);
+    padding: 1rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
+}
+
+.playlist-name-input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--glass-border);
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    color: var(--text-white);
+    font-size: 1rem;
+    width: 250px;
 }
 
 .btn-large {
     font-size: 1.5rem;
     padding: 1.5rem 4rem;
-    border-radius: 50px;
+    box-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
 }
 
-/* Add Method Tabs */
-.add-method-tabs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 1rem;
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.tab-btn:hover {
-    color: white;
-}
-
-.tab-btn.active {
-    color: white;
-}
-
-.tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -17px;
-    /* Adjust to align with border-bottom */
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 3px 3px 0 0;
-    box-shadow: 0 -2px 10px var(--primary-color);
-}
-
-@media (max-width: 768px) {
-    .setup-header h1 {
-        font-size: 2rem;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    .btn-large {
-        align-items: center;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .save-playlist-group {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .playlist-name-input {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
-        color: white;
-        font-size: 1rem;
-        width: 250px;
-    }
-}
-
-/* Modal */
+/* Modal Styles */
 .modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
+    z-index: 2000;
+    backdrop-filter: blur(10px);
 }
 
 .modal-content {
-    background: #1e1b2e;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 16px;
     width: 90%;
     max-width: 600px;
     max-height: 80vh;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
 }
 
 .modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--glass-border);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-bottom: 1.5rem;
 }
 
 .modal-header h2 {
     margin: 0;
-    color: white;
+    color: var(--text-white);
 }
 
 .btn-close {
     background: none;
     border: none;
-    color: rgba(255, 255, 255, 0.5);
+    color: var(--text-muted);
     font-size: 1.5rem;
     cursor: pointer;
 }
 
 .saved-playlists-list {
-    padding: 1.5rem;
     overflow-y: auto;
+    max-height: 50vh;
+    padding-right: 0.5rem;
 }
 
 .saved-playlist-item {
@@ -326,331 +356,50 @@
     justify-content: space-between;
     align-items: center;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    transition: background 0.3s ease;
-}
-
-.saved-playlist-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.playlist-details h3 {
-    margin: 0 0 0.3rem 0;
-    font-size: 1.1rem;
-    color: white;
-}
-
-.playlist-details span {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.playlist-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.btn-small {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-danger {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-}
-
-.btn-danger:hover {
-    background: rgba(239, 68, 68, 0.3);
-}
-
-.empty-state {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    padding: 2rem;
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-
-
-
-/* Add Method Tabs */
-.add-method-tabs {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    padding-bottom: 1rem;
-}
-
-.tab-btn {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 1rem;
-    font-weight: 600;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    position: relative;
-}
-
-.tab-btn:hover {
-    color: white;
-}
-
-.tab-btn.active {
-    color: white;
-}
-
-.tab-btn.active::after {
-    content: '';
-    position: absolute;
-    bottom: -17px;
-    /* Adjust to align with border-bottom */
-    left: 0;
-    width: 100%;
-    height: 3px;
-    background: var(--primary-color);
-    border-radius: 3px 3px 0 0;
-    box-shadow: 0 -2px 10px var(--primary-color);
-}
-
-@media (max-width: 768px) {
-    .setup-header h1 {
-        font-size: 2rem;
-    }
-
-    .input-group {
-        flex-direction: column;
-    }
-
-    .btn-large {
-        align-items: center;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    .save-playlist-group {
-        display: flex;
-        gap: 1rem;
-    }
-
-    .playlist-name-input {
-        background: rgba(0, 0, 0, 0.3);
-        border: 1px solid rgba(255, 255, 255, 0.1);
-        padding: 0.8rem 1rem;
-        border-radius: 8px;
-        color: white;
-        font-size: 1rem;
-        width: 250px;
-    }
-}
-
-/* Modal */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-    backdrop-filter: blur(5px);
-}
-
-.modal-content {
-    background: #1e1b2e;
-    border: 1px solid rgba(139, 92, 246, 0.3);
-    border-radius: 16px;
-    width: 90%;
-    max-width: 600px;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-}
-
-.modal-header {
-    padding: 1.5rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.modal-header h2 {
-    margin: 0;
-    color: white;
-}
-
-.btn-close {
-    background: none;
-    border: none;
-    color: rgba(255, 255, 255, 0.5);
-    font-size: 1.5rem;
-    cursor: pointer;
-}
-
-.saved-playlists-list {
-    padding: 1.5rem;
-    overflow-y: auto;
-}
-
-.saved-playlist-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 1rem;
-    background: rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    margin-bottom: 1rem;
-    transition: background 0.3s ease;
-}
-
-.saved-playlist-item:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-.playlist-details h3 {
-    margin: 0 0 0.3rem 0;
-    font-size: 1.1rem;
-    color: white;
-}
-
-.playlist-details span {
-    font-size: 0.85rem;
-    color: rgba(255, 255, 255, 0.5);
-}
-
-.playlist-actions {
-    display: flex;
-    gap: 0.5rem;
-}
-
-.btn-small {
-    padding: 0.4rem 0.8rem;
-    font-size: 0.85rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    font-weight: 600;
-}
-
-.btn-danger {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-}
-
-.btn-danger:hover {
-    background: rgba(239, 68, 68, 0.3);
-}
-
-.empty-state {
-    text-align: center;
-    color: rgba(255, 255, 255, 0.5);
-    padding: 2rem;
-}
-
-.btn-secondary {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-
-.btn-secondary:hover:not(:disabled) {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-.btn-secondary:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-}
-
-/* Header Controls */
-.header-top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-bottom: 1rem;
-    flex-wrap: wrap;
-    gap: 1.5rem;
-}
-
-.header-top h1 {
-    margin: 0;
-    width: 100%;
-    margin-bottom: 1rem;
-}
-
-.header-controls {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 0.5rem;
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 1rem;
+    transition: background 0.3s ease;
+    border: 1px solid transparent;
 }
 
-.size-selector {
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    font-weight: 600;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: all 0.3s ease;
-    appearance: none;
-    -webkit-appearance: none;
-    background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23FFFFFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-    background-repeat: no-repeat;
-    background-position: right 0.7rem top 50%;
-    background-size: 0.65rem auto;
-    padding-right: 2.5rem;
+.saved-playlist-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--glass-border);
 }
 
-.size-selector:hover {
-    background-color: rgba(255, 255, 255, 0.15);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(139, 92, 246, 0.3);
+.playlist-details h3 {
+    margin: 0 0 0.3rem 0;
+    font-size: 1.1rem;
+    color: var(--text-white);
 }
 
-.size-selector:focus {
-    outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+.playlist-details span {
+    font-size: 0.85rem;
+    color: var(--text-gray);
 }
 
-.size-selector option {
-    background: #1e1b2e;
-    color: white;
-    padding: 10px;
+.playlist-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+}
+
+@media (max-width: 768px) {
+    .input-group {
+        flex-direction: column;
+    }
+
+    .save-playlist-group {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .playlist-name-input {
+        width: 100%;
+    }
 }

@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { searchVideos } from '../utils/youtubeApi';
+import { useState } from 'react';
+import { searchVideos, hasApiKey } from '../utils/youtubeApi';
+import { NeonButton } from './UIComponents';
 import './YouTubeSearch.css';
 
 const YouTubeSearch = ({ onAddSong, disabled }) => {
@@ -9,6 +10,11 @@ const YouTubeSearch = ({ onAddSong, disabled }) => {
     const [error, setError] = useState('');
 
     const searchYouTube = async () => {
+        if (!hasApiKey()) {
+            setError('YouTube API Key is missing. Please check your .env file.');
+            return;
+        }
+
         if (!query.trim()) return;
 
         setLoading(true);
@@ -48,13 +54,13 @@ const YouTubeSearch = ({ onAddSong, disabled }) => {
                     onKeyPress={handleKeyPress}
                     disabled={disabled}
                 />
-                <button
-                    className="btn btn-primary"
+                <NeonButton
+                    variant="primary"
                     onClick={searchYouTube}
                     disabled={loading || disabled}
                 >
                     {loading ? 'Searching...' : 'Search'}
-                </button>
+                </NeonButton>
             </div>
 
             {error && <div className="error-message">{error}</div>}

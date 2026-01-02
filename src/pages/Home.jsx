@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { useTournament } from '../context/TournamentContext';
 import { TOP_YOUTUBERS, TopRappers, Top_Streamers } from '../data/prebuiltData';
 import { featuredPlaylists } from '../data/featuredPlaylists';
+import { GlassCard, NeonButton, AnimatedText } from '../components/UIComponents';
+import { motion, AnimatePresence } from 'framer-motion';
 import './Home.css';
 
 const Home = () => {
     const navigate = useNavigate();
-    const { startPrebuiltTournament } = useTournament();
+    const { startPrebuiltTournament, resetTournament } = useTournament();
     const [showSizeModal, setShowSizeModal] = useState(false);
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +39,6 @@ const Home = () => {
             data: TopRappers,
             gradient: 'linear-gradient(135deg, #FF0080 0%, #7928CA 100%)'
         },
-        // Add featured playlists
         ...featuredPlaylists.map(p => ({
             id: p.id,
             title: p.name,
@@ -58,9 +59,9 @@ const Home = () => {
 
     const handleCategoryClick = (category) => {
         if (category.id === 'custom') {
+            resetTournament();
             navigate('/custom');
         } else if (category.id === 'streamers' || category.id === 'youtubers') {
-            // Default size 8 for streamers and youtubers
             setSelectedCategory(category);
             handleStartPrebuilt(8, category);
         } else {
@@ -77,7 +78,6 @@ const Home = () => {
         setShowSizeModal(false);
 
         try {
-            // Shuffle and slice data
             const shuffled = [...category.data].sort(() => 0.5 - Math.random());
             const selectedItems = shuffled.slice(0, size);
 
@@ -93,59 +93,126 @@ const Home = () => {
 
     return (
         <div className="home-page">
-            {isLoading && (
-                <div className="loading-overlay">
-                    <div className="loading-content">
-                        <div className="spinner"></div>
-                        <p>Preparing your arena...</p>
-                        <span>Fetching song details from YouTube</span>
-                    </div>
-                </div>
-            )}
+            <AnimatePresence>
+                {isLoading && (
+                    <motion.div
+                        className="loading-overlay"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <div className="loading-content">
+                            <div className="spinner"></div>
+                            <p>Preparing your arena...</p>
+                            <span>Fetching song details from YouTube</span>
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
 
-            <div className="hero-section animate-fadeIn">
-                <h1 className="main-title">Hazem Arena</h1>
-                <p className="subtitle">Choose your battleground</p>
+            <div className="hero-section">
+                <AnimatedText text="Hazem Arena" className="main-title" />
+                <motion.p
+                    className="subtitle"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.5 }}
+                >
+                    Choose your battleground
+                </motion.p>
             </div>
 
-            <div className="categories-grid animate-fadeIn delay-200">
+            <motion.div
+                className="categories-grid"
+                initial="hidden"
+                animate="visible"
+                style={{
+                    minHeight: '800px',
+                    contain: 'layout style'
+                }}
+                variants={{
+                    visible: {
+                        transition: {
+                            staggerChildren: 0.06
+                        }
+                    }
+                }}
+            >
                 {categories.map((category) => (
-                    <div
+                    <GlassCard
                         key={category.id}
                         className="category-card"
                         onClick={() => handleCategoryClick(category)}
-                        style={{ '--card-gradient': category.gradient }}
+                        style={{
+                            '--card-gradient': category.gradient,
+                            height: '350px'
+                        }}
+                        variants={{
+                            hidden: { opacity: 0, scale: 0.8, rotateY: -15 },
+                            visible: {
+                                opacity: 1,
+                                scale: 1,
+                                rotateY: 0,
+                                transition: { type: 'spring', damping: 15, stiffness: 120 }
+                            }
+                        }}
+                        whileHover={{
+                            scale: 1.03,
+                            rotateZ: 0.5,
+                            boxShadow: "0 0 30px rgba(0, 243, 255, 0.3)"
+                        }}
                     >
                         <div className="card-icon">{category.image}</div>
                         <h3>{category.title}</h3>
                         <p>{category.description}</p>
-                        <button className="btn-play">Play Now</button>
-                    </div>
+                        <NeonButton
+                            variant="primary"
+                            className="btn-play"
+                            whileHover={{ scale: 1.1, letterSpacing: '2px' }}
+                        >
+                            Play Now
+                        </NeonButton>
+                    </GlassCard>
                 ))}
-            </div>
+            </motion.div>
 
-            {showSizeModal && (
-                <div className="modal-overlay animate-fadeIn" onClick={() => setShowSizeModal(false)}>
-                    <div className="modal-content size-modal" onClick={e => e.stopPropagation()}>
-                        <h2>Select Tournament Size</h2>
-                        <p>How many competitors?</p>
+            <AnimatePresence>
+                {showSizeModal && (
+                    <motion.div
+                        className="modal-overlay"
+                        onClick={() => setShowSizeModal(false)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                    >
+                        <GlassCard
+                            className="modal-content size-modal"
+                            onClick={e => e.stopPropagation()}
+                            initial={{ scale: 0.8, opacity: 0 }}
+                            animate={{ scale: 1, opacity: 1 }}
+                            exit={{ scale: 0.8, opacity: 0 }}
+                        >
+                            <h2>Select Tournament Size</h2>
+                            <p>How many competitors?</p>
 
-                        <div className="size-options">
-                            {[8, 16, 32].map(size => (
-                                <button
-                                    key={size}
-                                    className="btn-size"
-                                    onClick={() => handleStartPrebuilt(size)}
-                                >
-                                    {size}
-                                </button>
-                            ))}
-                        </div>
+                            <div className="size-options">
+                                {[8, 16, 32].map(size => (
+                                    <NeonButton
+                                        key={size}
+                                        className="btn-size"
+                                        onClick={() => handleStartPrebuilt(size)}
+                                        variant="secondary"
+                                    >
+                                        {size}
+                                    </NeonButton>
+                                ))}
+                            </div>
 
-                        <button className="btn-close-modal" onClick={() => setShowSizeModal(false)}>Cancel</button>
-                    </div>
-                </div>
-            )}
+                            <button className="btn-close-modal" onClick={() => setShowSizeModal(false)}>Cancel</button>
+                        </GlassCard>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

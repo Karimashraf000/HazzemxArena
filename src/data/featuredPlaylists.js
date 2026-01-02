@@ -78,5 +78,45 @@ export const featuredPlaylists = [
             { id: 'rock31', name: 'Dani California (Final)', image: 'https://img.youtube.com/vi/lwlogyj7nFE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=lwlogyj7nFE', embedUrl: 'https://www.youtube.com/embed/lwlogyj7nFE' },
             { id: 'rock32', name: 'Sweet Child O\' Mine (Alt)', image: 'https://img.youtube.com/vi/zRIbf6JqkNc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=zRIbf6JqkNc', embedUrl: 'https://www.youtube.com/embed/zRIbf6JqkNc' }
         ]
+    },
+    {
+        id: 'featured-egyptian-rap',
+        name: 'EGYPTIN RAP',
+        description: '32 Random tracks from the legendary Egyptian Rap .',
+        coverImage: 'https://images.unsplash.com/photo-1493225255756-d9584f8606e9?w=500&q=80',
+        songs: [
+            { id: 'egrap-0', name: 'Marwan Moussa - Zahab w 3awda', image: 'https://i.ytimg.com/vi/e915Gv5C_S0/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=e915Gv5C_S0', embedUrl: 'https://www.youtube.com/embed/e915Gv5C_S0' },
+            { id: 'egrap-1', name: 'MARWAN PABLO - FREE', image: 'https://i.ytimg.com/vi/QPZOWx681MQ/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=QPZOWx681MQ', embedUrl: 'https://www.youtube.com/embed/QPZOWx681MQ' },
+            { id: 'egrap-2', name: 'Moscow X @Rafiek - MEEN', image: 'https://i.ytimg.com/vi/oPVdhWiI9xE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=oPVdhWiI9xE', embedUrl: 'https://www.youtube.com/embed/oPVdhWiI9xE' },
+            { id: 'egrap-3', name: 'Abo El Anwar X Lil Baba - Mmmm Mmmm', image: 'https://i.ytimg.com/vi/m3NHZC16Bro/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=m3NHZC16Bro', embedUrl: 'https://www.youtube.com/embed/m3NHZC16Bro' },
+            { id: 'egrap-4', name: 'كليب فكك - دبل زوكش و عنبه', image: 'https://i.ytimg.com/vi/uVyGBqKMrkc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=uVyGBqKMrkc', embedUrl: 'https://www.youtube.com/embed/uVyGBqKMrkc' },
+            { id: 'egrap-5', name: 'Abo El Anwar X Lil Baba - MSH HA7EL', image: 'https://i.ytimg.com/vi/4ZqGjsfw--w/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=4ZqGjsfw--w', embedUrl: 'https://www.youtube.com/embed/4ZqGjsfw--w' },
+            { id: 'egrap-6', name: 'Wegz - El Bakht', image: 'https://i.ytimg.com/vi/_RHIECWv728/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=_RHIECWv728', embedUrl: 'https://www.youtube.com/embed/_RHIECWv728' },
+            { id: 'egrap-7', name: 'Marwan Moussa - Alo (Official Audio)', image: 'https://i.ytimg.com/vi/GtUHRhXXkkw/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=GtUHRhXXkkw', embedUrl: 'https://www.youtube.com/embed/GtUHRhXXkkw' },
+            { id: 'egrap-8', name: 'MARWAN PABLO - LEMAZA', image: 'https://i.ytimg.com/vi/hPQKTJRlZDE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=hPQKTJRlZDE', embedUrl: 'https://www.youtube.com/embed/hPQKTJRlZDE' },
+            { id: 'egrap-9', name: 'MARWAN PABLO - GHANIMA', image: 'https://i.ytimg.com/vi/5i_4aDrC1X8/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=5i_4aDrC1X8', embedUrl: 'https://www.youtube.com/embed/5i_4aDrC1X8' },
+            { id: 'egrap-10', name: 'Kordy X Meno Zein X Mahib - Masterpiece', image: 'https://i.ytimg.com/vi/jlWsx3yLTnE/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=jlWsx3yLTnE', embedUrl: 'https://www.youtube.com/embed/jlWsx3yLTnE' },
+            { id: 'egrap-11', name: 'MARWAN PABLO - GHABA', image: 'https://i.ytimg.com/vi/AM5jgcj1TJc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=AM5jgcj1TJc', embedUrl: 'https://www.youtube.com/embed/AM5jgcj1TJc' },
+            { id: 'egrap-12', name: 'Wegz - Bola bola', image: 'https://i.ytimg.com/vi/iiqtrGWCPIc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=iiqtrGWCPIc', embedUrl: 'https://www.youtube.com/embed/iiqtrGWCPIc' },
+            { id: 'egrap-13', name: 'Intomymind - Kalem El Matafy', image: 'https://i.ytimg.com/vi/Ia22jR2K4K0/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=Ia22jR2K4K0', embedUrl: 'https://www.youtube.com/embed/Ia22jR2K4K0' },
+            { id: 'egrap-14', name: '3ayz Fin', image: 'https://i.ytimg.com/vi/JmC7zXhOs5E/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=JmC7zXhOs5E', embedUrl: 'https://www.youtube.com/embed/JmC7zXhOs5E' },
+            { id: 'egrap-15', name: 'Karim Osama X @ELWaili - Nazlet Seman', image: 'https://i.ytimg.com/vi/kLhPH4B1zZ0/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=kLhPH4B1zZ0', embedUrl: 'https://www.youtube.com/embed/kLhPH4B1zZ0' },
+            { id: 'egrap-16', name: 'Wegz - Bola bola (W/Lyrics)', image: 'https://i.ytimg.com/vi/iiqtrGWCPIc/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=iiqtrGWCPIc', embedUrl: 'https://www.youtube.com/embed/iiqtrGWCPIc' },
+            { id: 'egrap-17', name: 'Marwan Moussa - Ya Salam (El Waili Remix)', image: 'https://i.ytimg.com/vi/GtUHRhXXkkw/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=GtUHRhXXkkw', embedUrl: 'https://www.youtube.com/embed/GtUHRhXXkkw' },
+            { id: 'egrap-18', name: 'Shahyn - LOKLOK', image: 'https://i.ytimg.com/vi/X8OuHvKd800/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=X8OuHvKd800', embedUrl: 'https://www.youtube.com/embed/X8OuHvKd800' },
+            { id: 'egrap-19', name: '@AbyusifOfficial X Adham Dou - BANSA NAFSY', image: 'https://i.ytimg.com/vi/StDnFW88L0A/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=StDnFW88L0A', embedUrl: 'https://www.youtube.com/embed/StDnFW88L0A' },
+            { id: 'egrap-20', name: 'HADY MOAMER - 7ETTA MENAK (SKIT)', image: 'https://i.ytimg.com/vi/EB-jDXh4M_w/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=EB-jDXh4M_w', embedUrl: 'https://www.youtube.com/embed/EB-jDXh4M_w' },
+            { id: 'egrap-21', name: 'Lella Fadda - TARAT TARAT TAT', image: 'https://i.ytimg.com/vi/WNGia2eihZA/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=WNGia2eihZA', embedUrl: 'https://www.youtube.com/embed/WNGia2eihZA' },
+            { id: 'egrap-22', name: 'AHMED SANTA - AH MEN EL-LYALY', image: 'https://i.ytimg.com/vi/1s7wpjfYeEs/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=1s7wpjfYeEs', embedUrl: 'https://www.youtube.com/embed/1s7wpjfYeEs' },
+            { id: 'egrap-23', name: 'AHMED SANTA - AHMED FALTA', image: 'https://i.ytimg.com/vi/AghRQkyid24/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=AghRQkyid24', embedUrl: 'https://www.youtube.com/embed/AghRQkyid24' },
+            { id: 'egrap-24', name: 'AFROTO - DAY5A Ft WEZZA MONTASER', image: 'https://i.ytimg.com/vi/j7cKYjNidgw/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=j7cKYjNidgw', embedUrl: 'https://www.youtube.com/embed/j7cKYjNidgw' },
+            { id: 'egrap-25', name: 'EL KEEF MZALA - KHALID OTSHA', image: 'https://i.ytimg.com/vi/mfMY6Kv6th8/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=mfMY6Kv6th8', embedUrl: 'https://www.youtube.com/embed/mfMY6Kv6th8' },
+            { id: 'egrap-26', name: 'Abo El Anwar X Lil Baba -3LATOL', image: 'https://i.ytimg.com/vi/hg7IIjwTiVU/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=hg7IIjwTiVU', embedUrl: 'https://www.youtube.com/embed/hg7IIjwTiVU' },
+            { id: 'egrap-27', name: 'Mkahrab - Marwan Moussa', image: 'https://i.ytimg.com/vi/fqMjSyFnSUQ/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=fqMjSyFnSUQ', embedUrl: 'https://www.youtube.com/embed/fqMjSyFnSUQ' },
+            { id: 'egrap-28', name: 'Abo El Anwar X Marwan Pablo X Lil Baba - Brrr Brrr Brrr', image: 'https://i.ytimg.com/vi/rVW1AjaYdRI/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=rVW1AjaYdRI', embedUrl: 'https://www.youtube.com/embed/rVW1AjaYdRI' },
+            { id: 'egrap-29', name: 'ZIAD ZAZA - KLAB KLAB', image: 'https://i.ytimg.com/vi/2UyIgH7RSCA/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=2UyIgH7RSCA', embedUrl: 'https://www.youtube.com/embed/2UyIgH7RSCA' },
+            { id: 'egrap-30', name: 'ALI LOKA - MATKHAFESH YAMMA', image: 'https://i.ytimg.com/vi/0BdvRRW_FQA/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=0BdvRRW_FQA', embedUrl: 'https://www.youtube.com/embed/0BdvRRW_FQA' },
+            { id: 'egrap-31', name: 'Mr Kordy - 13', image: 'https://i.ytimg.com/vi/dWs23k-K33o/hqdefault.jpg', url: 'https://www.youtube.com/watch?v=dWs23k-K33o', embedUrl: 'https://www.youtube.com/embed/dWs23k-K33o' }
+        ]
     }
 ];

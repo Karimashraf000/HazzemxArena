@@ -2,6 +2,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useTournament } from '../context/TournamentContext';
 import { getCurrentBattle, getTournamentProgress } from '../utils/tournamentUtils';
 import { useState } from 'react';
+import { GlassCard, NeonButton, AnimatedText } from '../components/UIComponents';
+import { motion } from 'framer-motion';
 import './BracketView.css';
 
 const BracketView = () => {
@@ -14,13 +16,13 @@ const BracketView = () => {
         return (
             <div className="bracket-view">
                 <div className="container">
-                    <div className="error-state">
+                    <GlassCard className="error-state">
                         <h2>No Tournament Found</h2>
                         <p>Create a new tournament to get started</p>
-                        <button className="btn btn-primary" onClick={() => navigate('/')}>
+                        <NeonButton variant="primary" onClick={() => navigate('/')}>
                             Go Home
-                        </button>
-                    </div>
+                        </NeonButton>
+                    </GlassCard>
                 </div>
             </div>
         );
@@ -58,10 +60,12 @@ const BracketView = () => {
         const isWinner2 = match.winner === match.song2;
 
         return (
-            <div
+            <motion.div
                 key={match.id}
-                className={`bracket-match ${isComplete ? 'complete' : 'pending'} animate-fadeIn`}
-                style={{ animationDelay: `${index * 0.05}s` }}
+                className={`bracket-match ${isComplete ? 'complete' : 'pending'}`}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: index * 0.05 }}
             >
                 <div className={`match-team ${isWinner1 ? 'winner' : isComplete ? 'loser' : ''}`}>
                     <span className="team-name">{song1Name}</span>
@@ -71,15 +75,15 @@ const BracketView = () => {
                     <span className="team-name">{song2Name}</span>
                     {isWinner2 && <span className="crown">👑</span>}
                 </div>
-            </div>
+            </motion.div>
         );
     };
 
     return (
         <div className="bracket-view">
             <div className="bracket-container">
-                <div className="bracket-header animate-fadeIn">
-                    <h1>Tournament Bracket</h1>
+                <div className="bracket-header">
+                    <AnimatedText text="Tournament Bracket" className="page-title" />
 
                     <div className="progress-section">
                         <div className="progress-stats">
@@ -93,39 +97,67 @@ const BracketView = () => {
                             </span>
                         </div>
                         <div className="progress-bar-bracket">
-                            <div className="progress-fill-bracket" style={{ width: `${progress.percentage}%` }} />
+                            <motion.div
+                                className="progress-fill-bracket"
+                                initial={{ width: 0 }}
+                                animate={{ width: `${progress.percentage}%` }}
+                                transition={{ duration: 1 }}
+                            />
                         </div>
                     </div>
 
                     <div className="header-actions">
                         {currentBattle && (
-                            <button className="btn btn-primary animate-glow" onClick={handleContinueBattle}>
+                            <NeonButton variant="primary" onClick={handleContinueBattle} className="animate-pulse">
                                 Continue Battle
-                            </button>
+                            </NeonButton>
                         )}
                         {progress.isComplete && (
-                            <div className="champion-announcement animate-scaleIn">
+                            <motion.div
+                                className="champion-announcement"
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                transition={{ type: 'spring' }}
+                            >
                                 <h2>🏆 Champion: {bracket.final[0].winner?.name || bracket.final[0].winner?.title} 🏆</h2>
-                            </div>
+                            </motion.div>
                         )}
-                        <button className="btn btn-secondary" onClick={handleShare}>
+                        <NeonButton variant="secondary" onClick={handleShare}>
                             {copied ? '✓ Copied!' : 'Share Tournament'}
-                        </button>
-                        <button className="btn btn-secondary" onClick={handleCreateNew}>
+                        </NeonButton>
+                        <NeonButton variant="secondary" onClick={handleCreateNew}>
                             Create New
-                        </button>
+                        </NeonButton>
                     </div>
                 </div>
 
-                <div className="bracket-rounds">
+                <motion.div
+                    className="bracket-rounds"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                        visible: {
+                            transition: {
+                                staggerChildren: 0.2
+                            }
+                        }
+                    }}
+                >
                     {bracket.rounds ? (
                         bracket.rounds.map((roundMatches, i) => (
-                            <div key={`round-${i}`} className="round">
+                            <motion.div
+                                key={`round-${i}`}
+                                className="round"
+                                variants={{
+                                    hidden: { opacity: 0, x: -20 },
+                                    visible: { opacity: 1, x: 0 }
+                                }}
+                            >
                                 <h3 className="round-title">{roundMatches[0].round}</h3>
                                 <div className="matches">
                                     {roundMatches.map((match, j) => renderMatch(match, j))}
                                 </div>
-                            </div>
+                            </motion.div>
                         ))
                     ) : (
                         // Fallback for old bracket structure if any
@@ -172,7 +204,7 @@ const BracketView = () => {
                             )}
                         </>
                     )}
-                </div>
+                </motion.div>
             </div>
         </div>
     );

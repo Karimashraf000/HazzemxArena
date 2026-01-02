@@ -18,6 +18,8 @@ export const TournamentProvider = ({ children }) => {
     const [tournamentId, setTournamentId] = useState(null);
 
     const [tournamentSize, setTournamentSize] = useState(32);
+    const [isTransitioning, setIsTransitioning] = useState(false);
+
 
 
     useEffect(() => {
@@ -280,8 +282,11 @@ export const TournamentProvider = ({ children }) => {
         loadPlaylist,
         saveLocalPlaylist,
         getLocalPlaylists,
-        deleteLocalPlaylist
+        deleteLocalPlaylist,
+        isTransitioning,
+        setIsTransitioning
     };
+
 
     return (
         <TournamentContext.Provider value={value}>
@@ -289,3 +294,5 @@ export const TournamentProvider = ({ children }) => {
         </TournamentContext.Provider>
     );
 };
+
+

@@ -2,7 +2,7 @@
     min-height: 100vh;
     padding: 2rem 0;
     position: relative;
-    z-index: 1;
+    z-index: 10;
 }
 
 .bracket-container {
@@ -15,15 +15,27 @@
     text-align: center;
     margin-bottom: 3rem;
     padding: 0 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.bracket-header h1 {
+.page-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 800;
+    color: var(--text-white);
     margin-bottom: 2rem;
+    text-transform: uppercase;
 }
 
 .progress-section {
     max-width: 600px;
+    width: 100%;
     margin: 0 auto 2rem;
+    background: var(--glass-bg);
+    padding: 1.5rem;
+    border-radius: 16px;
+    border: 1px solid var(--glass-border);
 }
 
 .progress-stats {
@@ -39,31 +51,31 @@
 }
 
 .stat .label {
-    color: var(--text-muted);
+    color: var(--text-gray);
     font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .stat .value {
-    color: var(--accent-cyan);
+    color: var(--primary-neon);
     font-size: 1.5rem;
     font-weight: 700;
-    font-family: var(--font-mono);
+    font-family: var(--font-heading);
 }
 
 .progress-bar-bracket {
     height: 8px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
     overflow: hidden;
 }
 
 .progress-fill-bracket {
     height: 100%;
-    background: linear-gradient(90deg, var(--primary-600), var(--accent-pink), var(--accent-cyan));
-    border-radius: 10px;
-    transition: width 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-    box-shadow: 0 0 20px rgba(6, 182, 212, 0.6);
+    background: linear-gradient(90deg, var(--primary-neon), var(--secondary-neon));
+    border-radius: 4px;
+    box-shadow: 0 0 10px var(--primary-neon);
 }
 
 .header-actions {
@@ -85,12 +97,12 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    animation: glow 2s ease-in-out infinite;
+    text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
 }
 
 .bracket-rounds {
     display: flex;
-    gap: 2rem;
+    gap: 3rem;
     justify-content: center;
     align-items: flex-start;
     min-width: fit-content;
@@ -100,20 +112,23 @@
 .round {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    min-width: 250px;
+    gap: 1.5rem;
+    min-width: 280px;
 }
 
 .round-title {
     text-align: center;
-    color: var(--primary-400);
+    color: var(--primary-neon);
     font-size: 1.25rem;
     margin-bottom: 1rem;
     padding: 0.75rem;
     background: var(--glass-bg);
     border: 1px solid var(--glass-border);
-    border-radius: 0.75rem;
+    border-radius: 12px;
     backdrop-filter: blur(10px);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
 }
 
 .matches {
@@ -128,28 +143,29 @@
     background: var(--glass-bg);
     backdrop-filter: blur(15px);
     border: 1px solid var(--glass-border);
-    border-radius: 0.75rem;
+    border-radius: 12px;
     overflow: hidden;
     transition: var(--transition-smooth);
-    opacity: 0;
+    position: relative;
 }
 
 .bracket-match:hover {
-    border-color: var(--primary-400);
-    box-shadow: 0 5px 25px rgba(139, 92, 246, 0.4);
+    border-color: var(--primary-neon);
+    box-shadow: 0 5px 25px rgba(0, 243, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .bracket-match.complete {
-    border-color: var(--accent-cyan);
+    border-color: var(--glass-highlight);
 }
 
 .bracket-match.pending {
     border-color: var(--glass-border);
-    opacity: 0.6;
+    opacity: 0.7;
 }
 
 .match-team {
-    padding: 0.875rem 1rem;
+    padding: 1rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -162,18 +178,18 @@
 }
 
 .match-team.winner {
-    background: linear-gradient(90deg, rgba(6, 182, 212, 0.2), rgba(6, 182, 212, 0.05));
-    border-left: 3px solid var(--accent-cyan);
+    background: linear-gradient(90deg, rgba(0, 243, 255, 0.1), transparent);
+    border-left: 3px solid var(--primary-neon);
     font-weight: 600;
 }
 
 .match-team.loser {
-    opacity: 0.4;
+    opacity: 0.5;
     text-decoration: line-through;
 }
 
 .team-name {
-    font-size: 0.95rem;
+    font-size: 1rem;
     color: var(--text-white);
     overflow: hidden;
     text-overflow: ellipsis;
@@ -184,7 +200,6 @@
 .crown {
     margin-left: 0.5rem;
     font-size: 1.25rem;
-    animation: pulse 1.5s ease-in-out infinite;
 }
 
 .error-state {
@@ -194,11 +209,12 @@
 
 .error-state h2 {
     margin-bottom: 1rem;
+    color: var(--text-white);
 }
 
 .error-state p {
     margin-bottom: 2rem;
-    color: var(--text-muted);
+    color: var(--text-gray);
 }
 
 /* Responsive */
@@ -206,15 +222,11 @@
     .bracket-rounds {
         overflow-x: auto;
         padding: 1rem;
+        justify-content: flex-start;
     }
 
     .round {
-        min-width: 200px;
-    }
-
-    .round-title {
-        font-size: 1rem;
-        padding: 0.5rem;
+        min-width: 240px;
     }
 }
 
@@ -232,27 +244,19 @@
         align-items: stretch;
     }
 
-    .header-actions .btn {
+    .header-actions button {
         width: 100%;
     }
 
     .bracket-rounds {
-        gap: 1rem;
+        gap: 1.5rem;
     }
 
     .round {
-        min-width: 180px;
+        min-width: 220px;
     }
 
     .matches {
-        gap: 1rem;
-    }
-
-    .match-team {
-        padding: 0.75rem 0.875rem;
-    }
-
-    .team-name {
-        font-size: 0.85rem;
+        gap: 1.5rem;
     }
 }
