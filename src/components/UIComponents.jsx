@@ -68,7 +68,7 @@ const ButtonBase = styled(motion.button)`
   font-family: var(--font-heading);
   font-weight: 600;
   font-size: 1rem;
-  line-height: 0;
+  line-height: 1.2;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,7 +82,9 @@ const ButtonBase = styled(motion.button)`
   backdrop-filter: blur(4px);
   z-index: 1;
   height: 3.5rem;
+  flex-shrink: 0;
   width: 100%;
+  padding: 0 1.5rem;
 
   &::before {
     content: '';

@@ -146,7 +146,7 @@ const Home = () => {
                         onClick={() => handleCategoryClick(category)}
                         style={{
                             '--card-gradient': category.gradient,
-                            height: '350px'
+                            minHeight: '350px'
                         }}
                         variants={{
                             hidden: { opacity: 0, scale: 0.8, rotateY: -15 },
