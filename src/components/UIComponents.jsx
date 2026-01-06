@@ -64,11 +64,11 @@ const ButtonBase = styled(motion.button)`
   background: rgba(0, 243, 255, 0.05);
   border: 1px solid var(--primary-neon);
   color: var(--primary-neon);
-  padding: 0.8rem 2rem;
+  padding: 0;
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: 1.1rem;
-  line-height: 1;
+  font-size: 1rem;
+  line-height: 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -81,7 +81,8 @@ const ButtonBase = styled(motion.button)`
   letter-spacing: 2px;
   backdrop-filter: blur(4px);
   z-index: 1;
-  min-height: 3.5rem;
+  height: 3.5rem;
+  width: 100%;
 
   &::before {
     content: '';
