@@ -144,8 +144,9 @@ export const featuredPlaylists = [
         ]
     },
 
+
     {
-        id: 'featured-egyptian-actresses',
+        id: 'featured-egyptian-actresse',
         name: 'Top Egyptian Actresses',
         description: 'Queens of Cinema',
         coverImage: 'https://images.unsplash.com/photo-1594744803329-e58b31de8bf5?w=500&q=80',
