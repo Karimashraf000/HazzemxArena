@@ -1,0 +1,45 @@
+.particles-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+
+.particle:nth-child(3n+1) {
+    background: linear-gradient(135deg, #EC4899, #F472B6);
+    box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
+}
+
+.particle:nth-child(3n+2) {
+    background: linear-gradient(135deg, #06B6D4, #22D3EE);
+    box-shadow: 0 0 10px rgba(6, 182, 212, 0.6);
+}
+
+/* Float animation with different patterns */
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    25% {
+        transform: translate(10px, -15px) rotate(90deg);
+    }
+
+    50% {
+        transform: translate(-5px, -30px) rotate(180deg);
+    }
+
+    75% {
+        transform: translate(-15px, -15px) rotate(270deg);
+    }
+}
+
+.particle {
+    animation: float 20s infinite ease-in-out;
+}
+
+.particle:nth-child(even) {
+    animation-direction: reverse;
+}
