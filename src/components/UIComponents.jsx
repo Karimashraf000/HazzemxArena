@@ -109,158 +109,158 @@ const ButtonBase = styled(motion.button)`
 // --- Components ---
 
 export const GlassCard = memo(({ children, className, staticMode = false, ...props }) => {
-    const x = useMotionValue(0);
-    const y = useMotionValue(0);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
 
-    const mouseXSpring = useSpring(x, { damping: 30, stiffness: 200 });
-    const mouseYSpring = useSpring(y, { damping: 30, stiffness: 200 });
+  const mouseXSpring = useSpring(x, { damping: 30, stiffness: 200 });
+  const mouseYSpring = useSpring(y, { damping: 30, stiffness: 200 });
 
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["15deg", "-15deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-15deg", "15deg"]);
 
-    // Glare moves opposite to tilt
-    const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
-    const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
-    const glareOpacity = useTransform(mouseXSpring, [-0.5, 0, 0.5], [0, 1, 0]); // Fade in/out based on angle? No, let's keep it simple.
+  // Glare moves opposite to tilt
+  const glareX = useTransform(mouseXSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareY = useTransform(mouseYSpring, [-0.5, 0.5], ["0%", "100%"]);
+  const glareOpacity = useTransform(mouseXSpring, [-0.5, 0, 0.5], [0, 1, 0]); // Fade in/out based on angle? No, let's keep it simple.
 
-    // Better glare opacity logic: visible when tilted
-    const glareOpacityDynamic = useTransform(
-        [mouseXSpring, mouseYSpring],
-        ([latestX, latestY]) => {
-            const distance = Math.sqrt(latestX * latestX + latestY * latestY);
-            return distance * 1.5; // Intensity increases with tilt
-        }
-    );
+  // Better glare opacity logic: visible when tilted
+  const glareOpacityDynamic = useTransform(
+    [mouseXSpring, mouseYSpring],
+    ([latestX, latestY]) => {
+      const distance = Math.sqrt(latestX * latestX + latestY * latestY);
+      return distance * 1.5; // Intensity increases with tilt
+    }
+  );
 
-    const handleMouseMove = (e) => {
-        if (staticMode) return;
-        const rect = e.currentTarget.getBoundingClientRect();
-        const width = rect.width;
-        const height = rect.height;
-        const mouseX = e.clientX - rect.left;
-        const mouseY = e.clientY - rect.top;
-        const xPct = mouseX / width - 0.5;
-        const yPct = mouseY / height - 0.5;
-        x.set(xPct);
-        y.set(yPct);
-    };
+  const handleMouseMove = (e) => {
+    if (staticMode) return;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const width = rect.width;
+    const height = rect.height;
+    const mouseX = e.clientX - rect.left;
+    const mouseY = e.clientY - rect.top;
+    const xPct = mouseX / width - 0.5;
+    const yPct = mouseY / height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
 
-    const handleMouseLeave = () => {
-        x.set(0);
-        y.set(0);
-    };
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
-    return (
-        <CardBase
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            $staticMode={staticMode}
-            style={{
-                rotateX: staticMode ? 0 : rotateX,
-                rotateY: staticMode ? 0 : rotateY,
-                transformPerspective: 1000,
-            }}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.4 }}
-            className={className}
-            {...props}
-        >
-            {!staticMode && (
-                <Glare
-                    style={{
-                        x: glareX,
-                        y: glareY,
-                        opacity: glareOpacityDynamic,
-                        translateX: '-50%',
-                        translateY: '-50%'
-                    }}
-                />
-            )}
-            <div style={{
-                transform: staticMode ? "none" : "translateZ(30px)",
-                height: '100%',
-                display: 'flex',
-                flexDirection: 'column',
-                position: 'relative',
-                zIndex: 2
-            }}>
-                {children}
-            </div>
-        </CardBase>
-    );
+  return (
+    <CardBase
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      $staticMode={staticMode}
+      style={{
+        rotateX: staticMode ? 0 : rotateX,
+        rotateY: staticMode ? 0 : rotateY,
+        transformPerspective: 1000,
+      }}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      transition={{ duration: 0.4 }}
+      className={className}
+      {...props}
+    >
+      {!staticMode && (
+        <Glare
+          style={{
+            x: glareX,
+            y: glareY,
+            opacity: glareOpacityDynamic,
+            translateX: '-50%',
+            translateY: '-50%'
+          }}
+        />
+      )}
+      <div style={{
+        transform: staticMode ? "none" : "translateZ(30px)",
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+        position: 'relative',
+        zIndex: 2
+      }}>
+        {children}
+      </div>
+    </CardBase>
+  );
 });
 
 export const NeonButton = memo(({ children, onClick, variant = 'primary', ...props }) => {
-    const colors = {
-        primary: 'var(--primary-neon)',
-        secondary: 'var(--secondary-neon)',
-        accent: 'var(--accent-hot-pink)',
-    };
+  const colors = {
+    primary: 'var(--primary-neon)',
+    secondary: 'var(--secondary-neon)',
+    accent: 'var(--accent-hot-pink)',
+  };
 
-    return (
-        <ButtonBase
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={onClick}
-            style={{
-                borderColor: colors[variant],
-                color: colors[variant],
-                boxShadow: `0 0 10px ${colors[variant]}40`
-            }}
-            {...props}
-        >
-            {children}
-        </ButtonBase>
-    );
+  return (
+    <ButtonBase
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      onClick={onClick}
+      style={{
+        borderColor: colors[variant],
+        color: colors[variant],
+        boxShadow: `0 0 10px ${colors[variant]}40`
+      }}
+      {...props}
+    >
+      {children}
+    </ButtonBase>
+  );
 });
 
 export const AnimatedText = memo(({ text, className }) => {
-    const letters = Array.from(text);
+  const letters = Array.from(text);
 
-    const container = {
-        hidden: { opacity: 0 },
-        visible: (i = 1) => ({
-            opacity: 1,
-            transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
-        }),
-    };
+  const container = {
+    hidden: { opacity: 0 },
+    visible: (i = 1) => ({
+      opacity: 1,
+      transition: { staggerChildren: 0.03, delayChildren: 0.04 * i },
+    }),
+  };
 
-    const child = {
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                type: "spring",
-                damping: 12,
-                stiffness: 100,
-            },
-        },
-        hidden: {
-            opacity: 0,
-            y: 20,
-            transition: {
-                type: "spring",
-                damping: 12,
-                stiffness: 100,
-            },
-        },
-    };
+  const child = {
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+    hidden: {
+      opacity: 0,
+      y: 20,
+      transition: {
+        type: "spring",
+        damping: 12,
+        stiffness: 100,
+      },
+    },
+  };
 
-    return (
-        <motion.div
-            style={{ overflow: "hidden", display: "flex", flexWrap: "wrap" }}
-            variants={container}
-            initial="hidden"
-            animate="visible"
-            className={className}
-        >
-            {letters.map((letter, index) => (
-                <motion.span variants={child} key={index}>
-                    {letter === " " ? "\u00A0" : letter}
-                </motion.span>
-            ))}
-        </motion.div>
-    );
+  return (
+    <motion.div
+      style={{ overflow: "hidden", display: "flex", flexWrap: "wrap" }}
+      variants={container}
+      initial="hidden"
+      animate="visible"
+      className={className}
+    >
+      {letters.map((letter, index) => (
+        <motion.span variants={child} key={index}>
+          {letter === " " ? "\u00A0" : letter}
+        </motion.span>
+      ))}
+    </motion.div>
+  );
 });
